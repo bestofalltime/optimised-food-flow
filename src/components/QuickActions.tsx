@@ -1,12 +1,11 @@
-
 import { Plus, Edit, FileText, TrendingDown } from "lucide-react";
 
 export const QuickActions = () => {
   const actions = [
-    { icon: Plus, label: "Add Stock", color: "bg-accent hover:bg-accent/80" },
-    { icon: TrendingDown, label: "Log Spoilage", color: "bg-red-500 hover:bg-red-600" },
-    { icon: Edit, label: "Adjust Quantity", color: "bg-yellow-500 hover:bg-yellow-600" },
-    { icon: FileText, label: "Generate Report", color: "bg-blue-500 hover:bg-blue-600" },
+    { icon: Plus, label: "Add Stock", color: "bg-accent/80 hover:bg-accent/60" },
+    { icon: TrendingDown, label: "Log Spoilage", color: "bg-red-600 hover:bg-red-700" },
+    { icon: Edit, label: "Adjust Quantity", color: "bg-yellow-600 hover:bg-yellow-700" },
+    { icon: FileText, label: "Generate Report", color: "bg-blue-600 hover:bg-blue-700" },
   ];
 
   return (
