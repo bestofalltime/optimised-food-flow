@@ -20,17 +20,13 @@ export const Sidebar = ({ activeSection, setActiveSection }: SidebarProps) => {
   return (
     <div className="w-64 bg-primary border-r border-accent/20 p-6">
       <div className="mb-8">
-        <div className="flex items-center space-x-3 mb-2">
-          <div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
-            <img 
-              src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=40&h=40&fit=crop&auto=format" 
-              alt="OptiMised Logo" 
-              className="w-8 h-8 rounded object-cover"
-            />
-          </div>
-          <h1 className="text-2xl font-bold text-white">OptiMised</h1>
+        <div className="flex items-center justify-center mb-6">
+          <img 
+            src="/lovable-uploads/8b5eeac1-aa2e-4fee-ae27-07892dbcf765.png" 
+            alt="OptiMised Logo" 
+            className="h-16 w-auto opacity-90 filter brightness-110"
+          />
         </div>
-        <p className="text-sm text-accent mt-1">Machine learning your food waste to zero.</p>
       </div>
       
       <nav className="space-y-2">
