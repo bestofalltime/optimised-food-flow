@@ -1,12 +1,41 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useState } from "react";
+import { Dashboard } from "@/components/Dashboard";
+import { InventoryLog } from "@/components/InventoryLog";
+import { VarianceReports } from "@/components/VarianceReports";
+import { WasteLog } from "@/components/WasteLog";
+import { OrderingAssistant } from "@/components/OrderingAssistant";
+import { SystemSettings } from "@/components/SystemSettings";
+import { Sidebar } from "@/components/Sidebar";
 
 const Index = () => {
+  const [activeSection, setActiveSection] = useState("dashboard");
+
+  const renderActiveSection = () => {
+    switch (activeSection) {
+      case "dashboard":
+        return <Dashboard />;
+      case "inventory":
+        return <InventoryLog />;
+      case "variance":
+        return <VarianceReports />;
+      case "waste":
+        return <WasteLog />;
+      case "ordering":
+        return <OrderingAssistant />;
+      case "settings":
+        return <SystemSettings />;
+      default:
+        return <Dashboard />;
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-primary flex w-full">
+      <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
+      <main className="flex-1 p-6">
+        {renderActiveSection()}
+      </main>
     </div>
   );
 };
