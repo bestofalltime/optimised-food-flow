@@ -97,24 +97,24 @@ export default function StepIngredients({
           )}
         </div>
       ) : (
-        <div className="mb-3 w-full">
-          <table className="w-full border text-sm bg-white rounded-lg">
+        <div className="mb-3 w-full overflow-x-auto">
+          <table className="w-full min-w-[750px] border text-sm bg-white rounded-lg">
             <thead>
               <tr className="bg-gray-100">
-                <th>Ingredient Name</th>
-                <th>Category</th>
-                <th>Unit</th>
-                <th>Cost/Unit</th>
-                <th>Expiry (Days)</th>
-                <th>Reorder Level</th>
+                <th className="whitespace-nowrap px-3 py-2">Ingredient Name</th>
+                <th className="whitespace-nowrap px-3 py-2">Category</th>
+                <th className="whitespace-nowrap px-3 py-2">Unit</th>
+                <th className="whitespace-nowrap px-3 py-2">Cost/Unit</th>
+                <th className="whitespace-nowrap px-3 py-2">Expiry (Days)</th>
+                <th className="whitespace-nowrap px-3 py-2">Reorder Level</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((row, idx) => (
                 <tr key={idx}>
-                  <td>
+                  <td className="whitespace-nowrap px-3 py-2">
                     <input
-                      className="bg-gray-50 border-b-2 focus:border-b-[#3CE8B3] py-1 px-2 rounded outline-none"
+                      className="bg-gray-50 border-b-2 focus:border-b-[#3CE8B3] py-1 px-2 rounded outline-none w-full"
                       placeholder="Name"
                       value={row.name}
                       onChange={e =>
@@ -124,9 +124,9 @@ export default function StepIngredients({
                       }
                     />
                   </td>
-                  <td>
+                  <td className="whitespace-nowrap px-3 py-2">
                     <select
-                      className="bg-gray-50 border-b-2 focus:border-b-[#3CE8B3] py-1 px-2 rounded outline-none"
+                      className="bg-gray-50 border-b-2 focus:border-b-[#3CE8B3] py-1 px-2 rounded outline-none w-full"
                       value={row.category}
                       onChange={e =>
                         setRows(r =>
@@ -142,9 +142,9 @@ export default function StepIngredients({
                       ))}
                     </select>
                   </td>
-                  <td>
+                  <td className="whitespace-nowrap px-3 py-2">
                     <select
-                      className="bg-gray-50 border-b-2 focus:border-b-[#3CE8B3] py-1 px-2 rounded outline-none"
+                      className="bg-gray-50 border-b-2 focus:border-b-[#3CE8B3] py-1 px-2 rounded outline-none w-full"
                       value={row.unit}
                       onChange={e =>
                         setRows(r =>
@@ -160,10 +160,10 @@ export default function StepIngredients({
                       ))}
                     </select>
                   </td>
-                  <td>
+                  <td className="whitespace-nowrap px-3 py-2">
                     <input
                       type="number"
-                      className="bg-gray-50 border-b-2 focus:border-b-[#3CE8B3] py-1 px-2 rounded outline-none"
+                      className="bg-gray-50 border-b-2 focus:border-b-[#3CE8B3] py-1 px-2 rounded outline-none w-full"
                       placeholder="0.00"
                       value={row.cost}
                       onChange={e =>
@@ -175,10 +175,10 @@ export default function StepIngredients({
                       }
                     />
                   </td>
-                  <td>
+                  <td className="whitespace-nowrap px-3 py-2">
                     <input
                       type="number"
-                      className="bg-gray-50 border-b-2 focus:border-b-[#3CE8B3] py-1 px-2 rounded outline-none"
+                      className="bg-gray-50 border-b-2 focus:border-b-[#3CE8B3] py-1 px-2 rounded outline-none w-full"
                       placeholder="Days"
                       value={row.expiry}
                       onChange={e =>
@@ -190,10 +190,10 @@ export default function StepIngredients({
                       }
                     />
                   </td>
-                  <td>
+                  <td className="whitespace-nowrap px-3 py-2">
                     <input
                       type="number"
-                      className="bg-gray-50 border-b-2 focus:border-b-[#3CE8B3] py-1 px-2 rounded outline-none"
+                      className="bg-gray-50 border-b-2 focus:border-b-[#3CE8B3] py-1 px-2 rounded outline-none w-full"
                       placeholder="Level"
                       value={row.reorder}
                       onChange={e =>
