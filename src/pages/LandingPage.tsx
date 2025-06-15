@@ -129,44 +129,33 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Pricing Plans + Call to Action in the same row */}
-      <section className="max-w-6xl mx-auto py-8 px-4">
-        <div className="flex flex-col gap-6 items-center">
-          <div className="text-2xl font-bold mb-2 text-center">
-            Start reducing waste in 5 minutes — no card needed.
-          </div>
-          <div className="w-full flex flex-col md:flex-row gap-6 md:gap-4 items-center md:items-stretch justify-center">
-            {/* Get Started main CTA */}
-            <div className="flex-1 flex items-stretch justify-center min-w-[220px]">
-              <button
-                className="w-full h-full px-8 py-3 rounded-2xl border-2 border-[#3CE8B3] bg-[#3CE8B3]/20 text-[#3CE8B3] font-bold text-lg hover:bg-[#3CE8B3] hover:text-[#0D1A2B] transition text-center flex items-center justify-center"
-                onClick={() => nav("/signup")}
-              >
-                Get Started
+      {/* Final CTA (moved above pricing) */}
+      <section className="text-center py-12 px-4">
+        <div className="text-2xl font-bold mb-3">Start reducing waste in 5 minutes — no card needed.</div>
+        <button className="mx-auto px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg hover:bg-[#33b392] transition" onClick={() => nav("/signup")}>
+          Get Started
+        </button>
+      </section>
+
+      {/* Pricing Plans */}
+      <section className="max-w-5xl mx-auto py-8 px-4">
+        <div className="flex flex-col md:flex-row gap-8 md:gap-4 items-center md:items-stretch justify-center w-full">
+          {plans.map(plan => <div key={plan.name} className={`flex-1 rounded-2xl border-2 ${plan.color} p-6 flex flex-col items-center min-w-[220px]`}>
+              <div className="text-2xl font-bold mb-2">{plan.name}</div>
+              <div className={accent + " text-3xl font-bold mb-3"}>{plan.price}</div>
+              <ul className="mb-6 space-y-1 text-white/90">
+                {plan.details.map(detail => <li key={detail}>• {detail}</li>)}
+              </ul>
+              <button className="bg-[#3CE8B3] w-full py-2 rounded font-bold text-[#0D1A2B] hover:bg-[#33b392] transition mb-2" onClick={() => nav("/signup")}>
+                {plan.cta}
               </button>
-            </div>
-            {plans.map(plan => (
-              <div key={plan.name} className={`flex-1 rounded-2xl border-2 ${plan.color} p-6 flex flex-col items-center min-w-[220px]`}>
-                <div className="text-2xl font-bold mb-2">{plan.name}</div>
-                <div className={accent + " text-3xl font-bold mb-3"}>{plan.price}</div>
-                <ul className="mb-6 space-y-1 text-white/90">
-                  {plan.details.map(detail => <li key={detail}>• {detail}</li>)}
-                </ul>
-                <button
-                  className="bg-[#3CE8B3] w-full py-2 rounded font-bold text-[#0D1A2B] hover:bg-[#33b392] transition mb-2"
-                  onClick={() => nav("/signup")}
-                >
-                  {plan.cta}
-                </button>
-              </div>
-            ))}
-          </div>
-          {/* Toggle Monthly/Yearly (not functional yet) */}
-          <div className="text-center text-white/50 text-xs mt-4">
-            <span className="px-2 py-1 rounded bg-[#3CE8B3]/10 text-[#3CE8B3] font-semibold">Monthly</span>
-            <span> / </span>
-            <span className="px-2 py-1 rounded hover:bg-[#3CE8B3]/10 transition cursor-pointer">Yearly <span className="text-[#3CE8B3]">–10%</span></span>
-          </div>
+            </div>)}
+        </div>
+        {/* Toggle Monthly/Yearly (not functional yet) */}
+        <div className="text-center text-white/50 text-xs mt-4">
+          <span className="px-2 py-1 rounded bg-[#3CE8B3]/10 text-[#3CE8B3] font-semibold">Monthly</span>
+          <span> / </span>
+          <span className="px-2 py-1 rounded hover:bg-[#3CE8B3]/10 transition cursor-pointer">Yearly <span className="text-[#3CE8B3]">–10%</span></span>
         </div>
       </section>
 
