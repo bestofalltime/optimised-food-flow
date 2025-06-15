@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from "react";
 import { Quote } from "lucide-react"; // lucide-react is already installed
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -302,12 +301,19 @@ export const TestimonialsCarousel: React.FC = () => {
           width: "100%",
           scrollBehavior: "smooth",
           cursor: "grab",
+          scrollbarWidth: "none", // Firefox
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onTouchStart={() => setIsHovered(true)}
         onTouchEnd={() => setIsHovered(false)}
       >
+        <style>{`
+          /* Hide scrollbar for Chrome, Safari and Opera */
+          .no-scrollbar::-webkit-scrollbar {
+            display: none !important;
+          }
+        `}</style>
         {cards.map((t, idx) => (
           <Card t={t} key={idx + t.author} />
         ))}
