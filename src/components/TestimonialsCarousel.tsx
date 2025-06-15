@@ -181,8 +181,6 @@ export const TestimonialsCarousel: React.FC = () => {
 
   // Duplicated cards for seamless loop
   const cards = [...testimonials, ...testimonials];
-  // Space between cards
-  const CARD_GAP = "24px";
 
   // Card rendering
   function Card({ t }: { t: Testimonial }) {
@@ -192,8 +190,8 @@ export const TestimonialsCarousel: React.FC = () => {
       <div
         dir={rtl ? "rtl" : "ltr"}
         className={cn(
-          "flex flex-col justify-between rounded-2xl shadow-lg border border-accent/10 bg-white/5 min-w-[320px] max-w-[340px] w-[320px] mx-0",
-          "px-7 py-7 mr-0",
+          "flex flex-col justify-between rounded-2xl shadow-lg border border-accent/10 bg-white/5 min-w-[320px] max-w-[340px] w-[320px]",
+          "px-7 py-7",
           "transition-transform transition-shadow duration-300",
           "hover:scale-105 hover:shadow-2xl",
           "cursor-grab",
@@ -203,7 +201,6 @@ export const TestimonialsCarousel: React.FC = () => {
           fontFamily: rtl
             ? notoSansAr
             : "'Inter', 'Poppins', 'SF Pro', ui-sans-serif, system-ui",
-          marginInlineEnd: CARD_GAP,
         }}
       >
         <Quote color={ACCENT} size={28} className={rtl ? "ml-2" : "mr-2"} />
@@ -293,7 +290,7 @@ export const TestimonialsCarousel: React.FC = () => {
       dir={dir}
     >
       <div
-        className="flex gap-6 flex-nowrap overflow-x-scroll no-scrollbar"
+        className="flex flex-nowrap gap-x-6 overflow-x-scroll no-scrollbar"
         ref={carouselRef}
         tabIndex={0}
         aria-label="Testimonials"
