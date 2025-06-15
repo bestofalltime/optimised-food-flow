@@ -91,7 +91,7 @@ export default function LandingPage() {
 
       {/* Features */}
       <section className="bg-[#0D1A2B] w-full max-w-none py-12 mx-0 px-0">
-        <div className="flex flex-col items-center w-full">
+        <div className="flex flex-col items-center w-full py-[44px]">
           <h2 className="font-bold text-white mb-8 tracking-tight text-4xl">
             Product Features
           </h2>
