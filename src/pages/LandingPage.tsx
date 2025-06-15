@@ -65,19 +65,37 @@ export default function LandingPage() {
   return <div className={`w-full min-h-screen ${bgDark} text-white`}>
       {/* Hero */}
       <div className="relative min-h-[60vh] flex items-center lg:items-end p-0" style={{
-      background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
-    }}>
-        <div className="absolute inset-0 pointer-events-none" />
-        <div className="relative z-10 w-full flex flex-col items-center p-8 text-center py-[50px]">
-          {/* Logo: lower brightness, no circular frame, no mask */}
-          <div className="flex items-center justify-center">
+        background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
+      }}>
+        {/* Vignette overlay */}
+        <div
+          className="pointer-events-none absolute inset-0 z-10"
+          aria-hidden="true"
+          style={{
+            maskImage: "none"
+          }}
+        >
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `radial-gradient(ellipse at center, rgba(13,26,43,0) 60%, rgba(13,26,43,0.97) 100%)`
+            }}
+          />
+        </div>
+        <div className="relative z-20 w-full flex flex-col items-center p-8 text-center py-[50px]">
+          {/* Logo: lower brightness, feather/gradient mask, vignette */}
+          <div className="flex items-center justify-center relative">
             <img
               src={bgImage}
               alt="OptiMised Logo"
               style={{
                 opacity: 0.6,
-                filter: "brightness(1.15) contrast(1.0) saturate(0.7)",
-                backgroundColor: "transparent"
+                filter: "brightness(1.1) contrast(1.11) saturate(0.90)",
+                backgroundColor: "transparent",
+                maskImage: "radial-gradient(circle at 50% 57%, white 62%, transparent 97%)",
+                WebkitMaskImage: "radial-gradient(circle at 50% 57%, white 62%, transparent 97%)",
+                maskSize: "cover",
+                WebkitMaskSize: "cover"
               }}
               className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] object-scale-down"
             />
