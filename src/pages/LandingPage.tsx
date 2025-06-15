@@ -87,13 +87,13 @@ export default function LandingPage() {
               }}
             />
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-lg">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
             Inventory Intelligence for Restaurants That Want to{" "}
             <span className={accent}>Waste Less</span>, Earn{" "}
             <span className={accent}>More</span>.
           </h1>
           <button
-            className={`mt-6 px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg shadow-lg hover:bg-[#33b392] transition`}
+            className={`mt-6 px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg hover:bg-[#33b392] transition`}
             onClick={() => nav("/signup")}
           >
             Start for Free
@@ -113,7 +113,7 @@ export default function LandingPage() {
               flex flex-col sm:flex-row gap-6 items-center justify-center
               ">
               {featuresRow1.map(f => <li key={f.label} className="relative text-center min-w-[160px] sm:min-w-[200px] px-2 flex flex-col items-center justify-center">
-                  <span className="inline-block text-xl sm:text-2xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight text-center py-0 mx-[5px]">
+                  <span className="inline-block text-xl sm:text-2xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text tracking-tight leading-tight text-center py-0 mx-[5px]">
                     {f.label}
                   </span>
                 </li>)}
@@ -123,7 +123,7 @@ export default function LandingPage() {
           <div className="w-full mt-6 flex justify-center">
             <ul className="flex flex-col sm:flex-row gap-6 items-center justify-center">
               {featuresRow2.map(f => <li key={f.label} className="relative text-center min-w-[160px] sm:min-w-[200px] px-2 flex flex-col items-center justify-center">
-                  <span className="inline-block text-xl sm:text-2xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight text-center py-0 mx-[5px]">
+                  <span className="inline-block text-xl sm:text-2xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text tracking-tight leading-tight text-center py-0 mx-[5px]">
                     {f.label}
                   </span>
                 </li>)}
@@ -149,7 +149,7 @@ export default function LandingPage() {
       {/* Pricing Plans */}
       <section className="max-w-5xl mx-auto py-8 px-4">
         <div className="flex flex-col md:flex-row gap-8 md:gap-4 items-center md:items-stretch justify-center w-full">
-          {plans.map(plan => <div key={plan.name} className={`flex-1 rounded-2xl border-2 ${plan.color} p-6 flex flex-col items-center shadow-md min-w-[220px]`}>
+          {plans.map(plan => <div key={plan.name} className={`flex-1 rounded-2xl border-2 ${plan.color} p-6 flex flex-col items-center min-w-[220px]`}>
               <div className="text-2xl font-bold mb-2">{plan.name}</div>
               <div className={accent + " text-3xl font-bold mb-3"}>{plan.price}</div>
               <ul className="mb-6 space-y-1 text-white/90">
@@ -181,7 +181,7 @@ export default function LandingPage() {
       {/* Final CTA */}
       <section className="text-center py-12 px-4">
         <div className="text-2xl font-bold mb-3">Start reducing waste in 5 minutes — no card needed.</div>
-        <button className="mx-auto px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg shadow-lg hover:bg-[#33b392] transition" onClick={() => nav("/signup")}>
+        <button className="mx-auto px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg hover:bg-[#33b392] transition" onClick={() => nav("/signup")}>
           Get Started
         </button>
       </section>
