@@ -129,6 +129,14 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Final CTA (moved above pricing) */}
+      <section className="text-center py-12 px-4">
+        <div className="text-2xl font-bold mb-3">Start reducing waste in 5 minutes — no card needed.</div>
+        <button className="mx-auto px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg hover:bg-[#33b392] transition" onClick={() => nav("/signup")}>
+          Get Started
+        </button>
+      </section>
+
       {/* Pricing Plans */}
       <section className="max-w-5xl mx-auto py-8 px-4">
         <div className="flex flex-col md:flex-row gap-8 md:gap-4 items-center md:items-stretch justify-center w-full">
@@ -159,14 +167,6 @@ export default function LandingPage() {
               <div className="text-white/70 text-sm">— {t.author}</div>
             </div>)}
         </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="text-center py-12 px-4">
-        <div className="text-2xl font-bold mb-3">Start reducing waste in 5 minutes — no card needed.</div>
-        <button className="mx-auto px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg hover:bg-[#33b392] transition" onClick={() => nav("/signup")}>
-          Get Started
-        </button>
       </section>
     </div>;
 }
