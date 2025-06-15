@@ -69,13 +69,15 @@ export default function LandingPage() {
       >
         <div className="absolute inset-0 pointer-events-none" />
         <div className="relative z-10 w-full max-w-4xl mx-auto p-8 text-center flex flex-col items-center">
-          {/* Logo - no circle, transparent, blends into bg */}
-          <img
-            src={bgImage}
-            alt="OptiMised Logo"
-            className="w-64 h-64 object-contain opacity-60 blur-[1.5px] select-none pointer-events-none"
-            style={{ backgroundColor: "transparent", marginBottom: 0 }}
-          />
+          {/* Logo integration for hero */}
+          <div className="flex items-center justify-center rounded-full backdrop-blur-sm bg-white/5 mb-1">
+            <img
+              src={bgImage}
+              alt="OptiMised Logo"
+              className="w-44 h-44 object-contain bg-transparent opacity-90"
+              style={{ backgroundColor: "transparent" }}
+            />
+          </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-lg">
             Inventory Intelligence for Restaurants That Want to{" "}
             <span className={accent}>Waste Less</span>, Earn{" "}
