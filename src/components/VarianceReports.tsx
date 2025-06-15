@@ -1,299 +1,153 @@
 
-import { useState } from "react";
-import { FileText, Download, Filter, AlertTriangle, TrendingUp, TrendingDown } from "lucide-react";
+import React, { useState } from "react";
+import { Download } from "lucide-react";
+import { VarianceFilterBar } from "./VarianceFilterBar";
+import { VarianceWasteChart } from "./VarianceWasteChart";
+import { VarianceComparisonTable } from "./VarianceComparisonTable";
+import { VarianceForecastModal } from "./VarianceForecastModal";
+import { VarianceForecastSidebar } from "./VarianceForecastSidebar";
 
-interface VarianceItem {
-  id: string;
-  itemName: string;
-  expectedUsage: number;
-  actualUsage: number;
-  variance: number;
-  variancePercent: number;
-  category: string;
-  lastUpdated: string;
-  staffComments: string[];
-  status: "high" | "moderate" | "normal";
-}
+const ingredientsList = [
+  { name: "Chicken", icon: "🥩" },
+  { name: "Tomatoes", icon: "🍅" },
+  { name: "Cheese", icon: "🧀" },
+];
 
-const mockVarianceData: VarianceItem[] = [
+const tableData = [
   {
-    id: "1",
-    itemName: "Chicken Breast",
-    expectedUsage: 12.0,
-    actualUsage: 15.2,
-    variance: 3.2,
-    variancePercent: 26.7,
-    category: "Meat",
-    lastUpdated: "2024-06-11 14:30",
-    staffComments: ["Large catering order", "Higher demand than usual"],
-    status: "moderate"
+    ingredient: "Chicken",
+    waste2023: 18.3,
+    waste2024: 26.1,
+    pctChange: 43,
+    trend: "up",
+    forecast: "Reduce reorder by 12%",
+    alert: { label: "High", emoji: "🔴" },
+    posDishes: ["Chicken Wrap", "Burger"],
+    forecastMsg: "Waste rose by 43% in 2024. System recommends reducing reorder by 12% for Q3."
   },
   {
-    id: "2",
-    itemName: "Cheese",
-    expectedUsage: 8.5,
-    actualUsage: 12.8,
-    variance: 4.3,
-    variancePercent: 50.6,
-    category: "Dairy",
-    lastUpdated: "2024-06-11 16:15",
-    staffComments: ["Possible theft", "Need investigation"],
-    status: "high"
+    ingredient: "Tomatoes",
+    waste2023: 12.2,
+    waste2024: 11.5,
+    pctChange: -6,
+    trend: "down",
+    forecast: "Increase reorder by 6%",
+    alert: { label: "Improved", emoji: "🟢" },
+    posDishes: ["Veggie Sandwich", "BLT"],
+    forecastMsg: "Waste fell by 6% in 2024. Increase reorders by 6% to meet sales demand."
   },
   {
-    id: "3",
-    itemName: "Lettuce",
-    expectedUsage: 6.0,
-    actualUsage: 5.8,
-    variance: -0.2,
-    variancePercent: -3.3,
-    category: "Vegetables",
-    lastUpdated: "2024-06-11 12:45",
-    staffComments: [],
-    status: "normal"
+    ingredient: "Cheese",
+    waste2023: 8.7,
+    waste2024: 9.1,
+    pctChange: 5,
+    trend: "neutral",
+    forecast: "Keep current volume",
+    alert: { label: "Neutral", emoji: "🟡" },
+    posDishes: ["Grilled Cheese", "Cheesy Nachos"],
+    forecastMsg: "Waste changed minimally. Maintain current order levels."
   },
-  {
-    id: "4",
-    itemName: "Tomatoes",
-    expectedUsage: 10.2,
-    actualUsage: 13.1,
-    variance: 2.9,
-    variancePercent: 28.4,
-    category: "Vegetables",
-    lastUpdated: "2024-06-11 15:20",
-    staffComments: ["Weekend rush", "Special promotion running"],
-    status: "moderate"
-  }
+];
+
+const chartData = [
+  // Jan–Dec (mock data, total waste, in kg for each year)
+  { month: "Jan", w2023: 72, w2024: 85 },
+  { month: "Feb", w2023: 68, w2024: 79 },
+  { month: "Mar", w2023: 85, w2024: 104 },
+  { month: "Apr", w2023: 77, w2024: 95 },
+  { month: "May", w2023: 64, w2024: 76 },
+  { month: "Jun", w2023: 92, w2024: 99 },
+  { month: "Jul", w2023: 86, w2024: 112 },
+  { month: "Aug", w2023: 81, w2024: 101 },
+  { month: "Sep", w2023: 73, w2024: 85 },
+  { month: "Oct", w2023: 80, w2024: 93 },
+  { month: "Nov", w2023: 69, w2024: 81 },
+  { month: "Dec", w2023: 87, w2024: 118 },
 ];
 
 export const VarianceReports = () => {
-  const [selectedPeriod, setSelectedPeriod] = useState("today");
-  const [categoryFilter, setCategoryFilter] = useState("all");
-  const [selectedItem, setSelectedItem] = useState<VarianceItem | null>(null);
+  // FILTERS
+  const [selectedTimeframe, setSelectedTimeframe] = useState("This Month");
+  const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
+  const [showForecast, setShowForecast] = useState(true);
 
-  const filteredData = mockVarianceData.filter(item => {
-    const matchesCategory = categoryFilter === "all" || item.category === categoryFilter;
-    return matchesCategory;
-  });
+  // MODAL
+  const [modalRow, setModalRow] = useState<null | typeof tableData[0]>(null);
 
-  const getVarianceColor = (status: string) => {
-    switch (status) {
-      case "high":
-        return "bg-red-500/20 text-red-300 border-red-500/30";
-      case "moderate":
-        return "bg-yellow-500/20 text-yellow-300 border-yellow-500/30";
-      case "normal":
-        return "bg-green-500/20 text-green-300 border-green-500/30";
-      default:
-        return "bg-accent/20 text-accent border-accent/30";
-    }
+  // Simulate PDF download loading
+  const [pdfLoading, setPdfLoading] = useState(false);
+  const handleDownloadPDF = () => {
+    setPdfLoading(true);
+    setTimeout(() => setPdfLoading(false), 1200);
   };
 
-  const VarianceIcon = ({ variance }: { variance: number }) => {
-    if (variance > 0) {
-      return <TrendingUp size={16} className="text-red-400" />;
-    } else if (variance < 0) {
-      return <TrendingDown size={16} className="text-green-400" />;
-    }
-    return null;
-  };
+  // Filtering for table (ingredient multi-select visual)
+  const filteredTable = selectedIngredients.length === 0
+    ? tableData
+    : tableData.filter(row => selectedIngredients.includes(row.ingredient));
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-white">Variance Reports</h1>
-        <div className="flex space-x-3">
-          <button className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors">
-            <Download size={20} />
-            <span>Export PDF</span>
-          </button>
-          <button className="bg-accent hover:bg-accent/80 text-primary px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors">
-            <FileText size={20} />
-            <span>Generate Report</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Filters */}
-      <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <select
-            value={selectedPeriod}
-            onChange={(e) => setSelectedPeriod(e.target.value)}
-            className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-accent"
+    <div className="flex flex-col md:flex-row min-h-[100vh] bg-[#0D1A2B] relative">
+      {/* MAIN COL */}
+      <div className="flex-1 md:pr-6 space-y-4 pb-8">
+        {/* Header */}
+        <div className="flex items-start md:items-center justify-between pt-8 pb-2 px-4 md:px-0">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1">Variance Reports &amp; Forecasting</h1>
+          </div>
+          <button
+            className="bg-accent px-5 py-2 rounded-lg flex items-center gap-2 text-primary font-medium hover:bg-accent/80 shadow transition disabled:opacity-60"
+            onClick={handleDownloadPDF}
+            disabled={pdfLoading}
+            title="Export this full table as a PDF for print or email"
           >
-            <option value="today">Today</option>
-            <option value="week">This Week</option>
-            <option value="month">This Month</option>
-            <option value="quarter">This Quarter</option>
-          </select>
+            <Download size={18} />
+            {pdfLoading ? (
+              <span className="animate-pulse">Generating PDF…</span>
+            ) : (
+              <span>Download Full Report (PDF)</span>
+            )}
+          </button>
+        </div>
 
-          <select
-            value={categoryFilter}
-            onChange={(e) => setCategoryFilter(e.target.value)}
-            className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-accent"
-          >
-            <option value="all">All Categories</option>
-            <option value="Meat">Meat</option>
-            <option value="Vegetables">Vegetables</option>
-            <option value="Dairy">Dairy</option>
-            <option value="Grains">Grains</option>
-          </select>
+        {/* Filter Bar */}
+        <VarianceFilterBar
+          selectedTimeframe={selectedTimeframe}
+          setSelectedTimeframe={setSelectedTimeframe}
+          selectedIngredients={selectedIngredients}
+          setSelectedIngredients={setSelectedIngredients}
+          showForecast={showForecast}
+          setShowForecast={setShowForecast}
+          ingredientsList={ingredientsList}
+        />
+
+        {/* Trend Chart */}
+        <VarianceWasteChart chartData={chartData} />
+
+        {/* Main Table */}
+        <div className="w-full mt-4">
+          <h3 className="text-lg font-semibold text-white mb-2 px-2 sm:px-0">Year-over-Year Waste Comparison</h3>
+          <VarianceComparisonTable
+            rows={filteredTable}
+            showForecast={showForecast}
+            onRowClick={setModalRow}
+          />
         </div>
       </div>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-6">
-          <div className="flex items-center space-x-3 mb-2">
-            <AlertTriangle className="text-red-400" size={24} />
-            <h3 className="text-lg font-semibold text-red-300">High Variance</h3>
-          </div>
-          <div className="text-3xl font-bold text-red-400">
-            {filteredData.filter(item => item.status === 'high').length}
-          </div>
-          <p className="text-red-300/70 text-sm">Items requiring attention</p>
-        </div>
-
-        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-6">
-          <div className="flex items-center space-x-3 mb-2">
-            <TrendingUp className="text-yellow-400" size={24} />
-            <h3 className="text-lg font-semibold text-yellow-300">Moderate Variance</h3>
-          </div>
-          <div className="text-3xl font-bold text-yellow-400">
-            {filteredData.filter(item => item.status === 'moderate').length}
-          </div>
-          <p className="text-yellow-300/70 text-sm">Items to monitor</p>
-        </div>
-
-        <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-6">
-          <div className="flex items-center space-x-3 mb-2">
-            <TrendingDown className="text-green-400" size={24} />
-            <h3 className="text-lg font-semibold text-green-300">Normal Variance</h3>
-          </div>
-          <div className="text-3xl font-bold text-green-400">
-            {filteredData.filter(item => item.status === 'normal').length}
-          </div>
-          <p className="text-green-300/70 text-sm">Items within range</p>
-        </div>
+      {/* RIGHT SIDEBAR (Desktop) */}
+      <div className="min-w-[280px] w-full md:w-[350px] pt-8 pr-4 md:sticky md:top-0">
+        <VarianceForecastSidebar />
       </div>
 
-      {/* Variance Table */}
-      <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-white/10">
-              <tr>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Item</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Expected</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Actual</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Variance</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Status</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Last Updated</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredData.map((item, index) => (
-                <tr 
-                  key={item.id} 
-                  className={`border-t border-white/10 ${index % 2 === 0 ? 'bg-white/5' : ''} hover:bg-white/10 cursor-pointer transition-colors`}
-                  onClick={() => setSelectedItem(item)}
-                >
-                  <td className="px-6 py-4">
-                    <div>
-                      <div className="font-medium text-white">{item.itemName}</div>
-                      <div className="text-sm text-white/70">{item.category}</div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-white">{item.expectedUsage.toFixed(1)} kg</td>
-                  <td className="px-6 py-4 text-white">{item.actualUsage.toFixed(1)} kg</td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center space-x-2">
-                      <VarianceIcon variance={item.variance} />
-                      <span className={`font-medium ${item.variance > 0 ? 'text-red-400' : 'text-green-400'}`}>
-                        {item.variance > 0 ? '+' : ''}{item.variance.toFixed(1)} kg
-                      </span>
-                      <span className="text-white/70">
-                        ({item.variancePercent > 0 ? '+' : ''}{item.variancePercent.toFixed(1)}%)
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className={`inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-medium border ${getVarianceColor(item.status)}`}>
-                      <span className="capitalize">{item.status}</span>
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-white/70">{item.lastUpdated}</td>
-                  <td className="px-6 py-4">
-                    <button 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedItem(item);
-                      }}
-                      className="bg-accent/20 hover:bg-accent/30 text-accent px-3 py-1 rounded-lg text-sm transition-colors"
-                    >
-                      Details
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Detail Modal */}
-      {selectedItem && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-primary border border-white/20 rounded-xl p-6 w-full max-w-2xl">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-white">Variance Details: {selectedItem.itemName}</h3>
-              <button 
-                onClick={() => setSelectedItem(null)}
-                className="text-white/70 hover:text-white"
-              >
-                ✕
-              </button>
-            </div>
-            
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white/5 p-4 rounded-lg">
-                  <div className="text-white/70 text-sm">Expected Usage</div>
-                  <div className="text-xl font-bold text-white">{selectedItem.expectedUsage} kg</div>
-                </div>
-                <div className="bg-white/5 p-4 rounded-lg">
-                  <div className="text-white/70 text-sm">Actual Usage</div>
-                  <div className="text-xl font-bold text-white">{selectedItem.actualUsage} kg</div>
-                </div>
-              </div>
-              
-              <div className="bg-white/5 p-4 rounded-lg">
-                <div className="text-white/70 text-sm mb-2">Staff Comments</div>
-                {selectedItem.staffComments.length > 0 ? (
-                  <ul className="space-y-1">
-                    {selectedItem.staffComments.map((comment, index) => (
-                      <li key={index} className="text-white text-sm">• {comment}</li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-white/50 text-sm">No comments available</p>
-                )}
-              </div>
-              
-              <div className="flex space-x-3">
-                <button className="bg-accent hover:bg-accent/80 text-primary px-4 py-2 rounded-lg transition-colors">
-                  Add Comment
-                </button>
-                <button className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-colors">
-                  Mark as Resolved
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* Modal (Forecast Details) */}
+      {modalRow && (
+        <VarianceForecastModal
+          open={!!modalRow}
+          onOpenChange={(open) => { if (!open) setModalRow(null); }}
+          row={modalRow}
+        />
       )}
     </div>
   );
-};
+}
