@@ -70,13 +70,13 @@ export default function LandingPage() {
           backgroundColor: "#0D1A2B",
           borderRadius: "50%"
         }}>
-            <img src={bgImage} alt="OptiMised Logo" className="w-96 h-96 object-contain bg-transparent brightness-110" style={{
+            <img src={bgImage} alt="OptiMised Logo" style={{
             opacity: 0.65,
             filter: "brightness(1.15)",
             backgroundColor: "#0D1A2B",
             WebkitMaskImage: "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)",
             maskImage: "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)"
-          }} />
+          }} className="w-96 h-96 bg-transparent brightness-110 object-scale-down" />
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
             Inventory Intelligence for Restaurants That Want to{" "}
