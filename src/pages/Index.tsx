@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Dashboard } from "@/components/Dashboard";
 import { InventoryLog } from "@/components/InventoryLog";
@@ -7,6 +6,7 @@ import { WasteLog } from "@/components/WasteLog";
 import { OrderingAssistant } from "@/components/OrderingAssistant";
 import { SystemSettings } from "@/components/SystemSettings";
 import { Sidebar } from "@/components/Sidebar";
+import { OptiMisedAssistant } from "@/components/OptiMisedAssistant";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("dashboard");
@@ -35,6 +35,7 @@ const Index = () => {
       <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
       <main className="flex-1 p-6">
         {renderActiveSection()}
+        <OptiMisedAssistant />
       </main>
     </div>
   );
