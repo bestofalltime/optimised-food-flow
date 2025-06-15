@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect, useState } from "react";
 import { Quote } from "lucide-react"; // lucide-react is already installed
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -295,6 +296,7 @@ export const TestimonialsCarousel: React.FC = () => {
       <div
         className="flex gap-6 flex-nowrap overflow-x-scroll no-scrollbar"
         ref={carouselRef}
+        tabIndex={0}
         aria-label="Testimonials"
         style={{
           width: "100%",
