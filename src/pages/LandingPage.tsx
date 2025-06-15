@@ -134,12 +134,12 @@ export default function LandingPage() {
       </div>
 
       {/* Features */}
-      <section className="bg-[#0D1A2B] w-full max-w-none py-12 px-2 sm:px-6">
+      <section className="bg-[#0D1A2B] w-full max-w-none py-12 px-0 mx-0">
         <div className="flex flex-col items-center w-full">
           <h2 className="text-2xl font-bold text-white mb-6 tracking-tight">
             Product Features
           </h2>
-          <ul className="max-w-7xl w-full flex flex-col sm:flex-row sm:justify-between items-center gap-8 sm:gap-2 mx-auto">
+          <ul className="max-w-[1700px] w-full flex flex-col sm:flex-row sm:justify-between items-center gap-8 sm:gap-2 mx-auto px-0">
             {features.map((f, idx) => (
               <li
                 key={f.label}
