@@ -68,7 +68,7 @@ export default function LandingPage() {
         }}
       >
         <div className="absolute inset-0 pointer-events-none" />
-        <div className="relative z-10 w-full max-w-4xl mx-auto p-8 text-center flex flex-col items-center">
+        <div className="relative z-10 w-full flex flex-col items-center p-8 text-center">
           {/* Logo: clear center, more blurred edges, blends with background */}
           <div
             className="flex items-center justify-center"
