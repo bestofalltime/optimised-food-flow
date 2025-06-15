@@ -79,7 +79,7 @@ export default function LandingPage() {
                 filter: "brightness(1.15) contrast(1.0) saturate(0.7)",
                 backgroundColor: "transparent"
               }}
-              className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] object-scale-down"
+              className="w-[330px] h-[330px] sm:w-[440px] sm:h-[440px] md:w-[550px] md:h-[550px] object-scale-down"
             />
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 py-0">
