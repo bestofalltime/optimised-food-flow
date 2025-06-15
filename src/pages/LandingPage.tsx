@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
+import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 const bgImage = "/lovable-uploads/8b5eeac1-aa2e-4fee-ae27-07892dbcf765.png";
 const featuresRow1 = [{
   label: "Real-time POS syncing"
@@ -61,7 +62,8 @@ const bgDark = "bg-[#0D1A2B]";
 const bgOverlay = "bg-black/60";
 export default function LandingPage() {
   const nav = useNavigate();
-  return <div className={`w-full min-h-screen ${bgDark} text-white`}>
+  return (
+    <div className={`w-full min-h-screen ${bgDark} text-white`}>
       {/* Hero */}
       <div className="relative min-h-[60vh] flex items-center lg:items-end p-0" style={{
       background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
@@ -179,13 +181,14 @@ export default function LandingPage() {
       </section>
 
       {/* Testimonials */}
-      <section className="max-w-4xl mx-auto py-10 px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {testimonials.map((t, i) => <div key={i} className="bg-white/5 border border-accent/10 rounded-xl p-6 flex flex-col items-center">
-              <blockquote className="italic text-lg text-[#3CE8B3] mb-3">“{t.quote}”</blockquote>
-              <div className="text-white/70 text-sm">— {t.author}</div>
-            </div>)}
+      <section className="w-full py-4 bg-[#0D1A2B]">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-7 text-white tracking-tight">
+            What Restaurants Are Saying About OptiMised
+          </h2>
         </div>
+        <TestimonialsCarousel />
       </section>
-    </div>;
+    </div>
+  );
 }
