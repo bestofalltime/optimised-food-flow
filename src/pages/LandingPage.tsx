@@ -146,11 +146,12 @@ export default function LandingPage() {
 
       {/* Pricing Plans */}
       <section className="max-w-5xl mx-auto py-8 px-4">
-        <div className="flex flex-col md:flex-row gap-8 md:gap-4 items-stretch justify-center w-full">
+        <div className="flex flex-col md:flex-row gap-8 md:gap-4 items-center md:items-stretch justify-center w-full">
           {plans.map(plan => (
             <div
               key={plan.name}
-              className={`flex-1 w-full rounded-2xl border-2 ${plan.color} p-6 flex flex-col justify-between min-h-[380px] h-full`}
+              className={`flex-1 rounded-2xl border-2 ${plan.color} p-6 flex flex-col justify-between min-w-[220px] h-full`}
+              style={{ minHeight: "380px" }}
             >
               <div>
                 <div className="text-2xl font-bold mb-2">{plan.name}</div>
@@ -160,7 +161,7 @@ export default function LandingPage() {
                 <ul className="mb-6 space-y-1 text-white/90">
                   {plan.details.map(detail => (
                     <li key={detail}>
-                      <span className="mr-2 text-[#3CE8B3]">✅</span>
+                      <span className="mr-2 text-[#3CE8B3]">•</span>
                       {detail}
                     </li>
                   ))}
