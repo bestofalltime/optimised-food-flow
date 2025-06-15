@@ -76,14 +76,14 @@ export default function LandingPage() {
               alt="OptiMised Logo"
               style={{
                 opacity: 0.6,
-                filter: "brightness(1.05) contrast(0.9) drop-shadow(0 0 6px white)",
+                filter: "brightness(1.05) contrast(0.9)",
                 backgroundColor: "#0D1A2B",
                 WebkitMaskImage:
-                  "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)",
+                  "radial-gradient(circle at 50% 50%, white 40%, rgba(255,255,255,0.2) 75%, transparent 100%)",
                 maskImage:
-                  "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)"
+                  "radial-gradient(circle at 50% 50%, white 40%, rgba(255,255,255,0.2) 75%, transparent 100%)"
               }}
-              className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] bg-transparent object-scale-down"
+              className="w-[350px] h-[350px] sm:w-[480px] sm:h-[480px] md:w-[600px] md:h-[600px] bg-transparent object-scale-down"
             />
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
