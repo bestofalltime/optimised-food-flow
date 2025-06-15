@@ -58,28 +58,22 @@ const bgDark = "bg-[#0D1A2B]";
 const bgOverlay = "bg-black/60";
 export default function LandingPage() {
   const nav = useNavigate();
-  return (
-    <div className={`w-full min-h-screen ${bgDark} text-white`}>
+  return <div className={`w-full min-h-screen ${bgDark} text-white`}>
       {/* Hero */}
       <div className="relative min-h-[60vh] flex items-center lg:items-end p-0" style={{
-        background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
-      }}>
+      background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
+    }}>
         <div className="absolute inset-0 pointer-events-none" />
         <div className="relative z-10 w-full flex flex-col items-center p-8 text-center py-[50px]">
           {/* Logo: lower brightness, no circular frame, no mask */}
           <div className="flex items-center justify-center">
-            <img
-              src={bgImage}
-              alt="OptiMised Logo"
-              style={{
-                opacity: 0.6,
-                filter: "brightness(0.75) contrast(0.9)",
-                backgroundColor: "transparent"
-              }}
-              className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] object-scale-down"
-            />
+            <img src={bgImage} alt="OptiMised Logo" style={{
+            opacity: 0.6,
+            filter: "brightness(0.75) contrast(0.9)",
+            backgroundColor: "transparent"
+          }} className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] object-scale-down" />
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 py-0">
             Inventory Intelligence for Restaurants That Want to{" "}
             <span className={accent}>Waste Less</span>, Earn{" "}
             <span className={accent}>More</span>.
@@ -174,6 +168,5 @@ export default function LandingPage() {
           Get Started
         </button>
       </section>
-    </div>
-  );
+    </div>;
 }
