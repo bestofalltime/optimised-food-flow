@@ -9,8 +9,8 @@ export default function SignupLogoHeader() {
         alt="OptiMised Logo"
         className="w-[300px] h-[300px] object-scale-down mb-3"
         style={{
-          opacity: 0.45,
-          filter: "brightness(1.45) contrast(1.0) saturate(0.7)",
+          opacity: 0.28, // more translucent
+          filter: "brightness(1.55) contrast(1.21) saturate(0.8)",
           backgroundColor: "transparent"
         }}
       />
@@ -18,3 +18,4 @@ export default function SignupLogoHeader() {
     </div>
   );
 }
+
