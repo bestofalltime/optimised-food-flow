@@ -43,14 +43,14 @@ export default function SetupWizard() {
       <ProgressBar step={step + 1} maxSteps={steps.length} />
       <div className="flex-1 flex w-full justify-center items-center px-2 py-10">
         <div className="w-full max-w-3xl bg-white shadow-xl rounded-2xl p-8 md:p-12 flex flex-col gap-8 transition-all animate-fade-in">
-          <h2 className="text-2xl md:text-3xl font-bold mb-1 text-center text-[#0D1A2B]">{steps[step].label}</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-1 text-center text-[#0D1A2B]">
+            {steps[step].label}
+          </h2>
           <CurrentStep
             onNext={handleNext}
             onBack={handleBack}
             onSkip={handleSkip}
-            isLastStep={isLastStep}
             isFirstStep={step === 0}
-            stepIndex={step}
           />
         </div>
       </div>
