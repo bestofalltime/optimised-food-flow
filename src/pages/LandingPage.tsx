@@ -62,8 +62,8 @@ const bgDark = "bg-[#0D1A2B]";
 const bgOverlay = "bg-black/60";
 export default function LandingPage() {
   const nav = useNavigate();
-  // Grid positions: want Staff accountability (index 3) and Mobile + desktop access (index 4) on the bottom row
-  return <div className={`w-full min-h-screen ${bgDark} text-white`}>
+  return (
+    <div className={`w-full min-h-screen ${bgDark} text-white`}>
       {/* Hero */}
       <div className="relative min-h-[60vh] flex items-center lg:items-end p-0" style={{
       background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
@@ -88,43 +88,31 @@ export default function LandingPage() {
           <h2 className="text-2xl font-bold text-white mb-6 tracking-tight">
             Product Features
           </h2>
-          <ul className="
+          <ul
+            className="
               w-full
-              grid
-              grid-cols-1
-              grid-rows-5
-              gap-6
-              sm:grid-cols-3 sm:grid-rows-2
-              md:grid-cols-5 md:grid-rows-2
-              max-w-[1400px]
+              flex
+              flex-col
+              items-center
+              sm:flex-row
+              sm:justify-center
+              sm:space-x-8
+              max-w-[800px]
               mx-auto
               px-0
-              justify-items-center
-              items-center
-            ">
-            {/* Top row: 0,1,2; Bottom row: 3,4 */}
-            {features.map((f, idx) => {
-            let gridClass = "";
-            if (idx === 3) {
-              // "Staff accountability tools"
-              gridClass = "sm:col-start-1 sm:row-start-2 md:col-start-4 md:row-start-2";
-            } else if (idx === 4) {
-              // "Mobile + desktop access"
-              gridClass = "sm:col-start-2 sm:row-start-2 md:col-start-5 md:row-start-2";
-            } else if (idx === 0) {
-              gridClass = "sm:col-start-1 sm:row-start-1 md:col-start-1 md:row-start-1";
-            } else if (idx === 1) {
-              gridClass = "sm:col-start-2 sm:row-start-1 md:col-start-2 md:row-start-1";
-            } else if (idx === 2) {
-              gridClass = "sm:col-start-3 sm:row-start-1 md:col-start-3 md:row-start-1";
-            }
-            return <li key={f.label} className={`relative text-center min-w-[160px] sm:min-w-[200px] px-2 flex flex-col items-center justify-center ${gridClass}`}>
-                  <span className="inline-block text-xl sm:text-2xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight text-center py-0 mx-[5px]">
-                    {f.label}
-                  </span>
-                  {/* Remove vertical divider for grid version */}
-                </li>;
-          })}
+              "
+          >
+            {features.slice(0, 3).map((f) => (
+              <li
+                key={f.label}
+                className="relative text-center min-w-[160px] sm:min-w-[200px] px-4 flex flex-col items-center justify-center mb-8 sm:mb-0"
+              >
+                <div className="text-3xl mb-2">{f.icon}</div>
+                <span className="inline-block text-xl sm:text-2xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight text-center py-0 mx-[5px]">
+                  {f.label}
+                </span>
+              </li>
+            ))}
           </ul>
         </div>
       </section>
@@ -182,5 +170,6 @@ export default function LandingPage() {
           Get Started
         </button>
       </section>
-    </div>;
+    </div>
+  );
 }
