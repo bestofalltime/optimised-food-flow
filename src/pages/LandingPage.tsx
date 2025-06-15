@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import TestimonialsCarousel from "@/components/TestimonialsCarousel";
@@ -72,11 +71,16 @@ export default function LandingPage() {
         <div className="relative z-10 w-full flex flex-col items-center p-8 text-center py-[50px]">
           {/* Logo: lower brightness, no circular frame, no mask */}
           <div className="flex items-center justify-center">
-            <img src={bgImage} alt="OptiMised Logo" style={{
-            opacity: 0.6,
-            filter: "brightness(0.85) contrast(0.85)",
-            backgroundColor: "transparent"
-          }} className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] object-scale-down" />
+            <img
+              src={bgImage}
+              alt="OptiMised Logo"
+              style={{
+                opacity: 0.6,
+                filter: "brightness(0.7) contrast(0.85)",
+                backgroundColor: "transparent"
+              }}
+              className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] object-scale-down"
+            />
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 py-0">
             Inventory Intelligence for Restaurants That Want to{" "}
