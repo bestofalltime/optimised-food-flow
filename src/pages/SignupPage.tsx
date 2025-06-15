@@ -69,7 +69,7 @@ export default function SignupPage() {
         if ((window as any).toast) {
           (window as any).toast("Account created", { type: "success" });
         }
-        nav("/dashboard");
+        nav("/setup"); // Redirect to setup wizard after signup
       }
     }, 1500);
   }
