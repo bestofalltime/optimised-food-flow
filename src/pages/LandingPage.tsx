@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 
 const bgImage = "/lovable-uploads/8b5eeac1-aa2e-4fee-ae27-07892dbcf765.png";
@@ -136,13 +135,23 @@ export default function LandingPage() {
 
       {/* Features */}
       <section className="max-w-5xl mx-auto pt-12 pb-2 px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-          {features.map((f) => (
-            <div key={f.label} className="flex flex-col items-center gap-2 p-6 rounded-lg bg-white/[0.04] backdrop-blur-sm border border-accent/10">
-              <span className="text-3xl">{f.icon}</span>
-              <span className="font-semibold mt-1 text-lg text-white">{f.label}</span>
-            </div>
-          ))}
+        <div className="flex flex-col items-center">
+          <h2 className="text-2xl font-bold text-white mb-4">Product Features</h2>
+          <ul className="w-full flex flex-col sm:flex-row sm:justify-between items-center gap-6 sm:gap-0">
+            {features.map((f, idx) => (
+              <li
+                key={f.label}
+                className="relative text-center py-2 px-4 sm:px-0"
+              >
+                <span className="text-lg font-semibold text-[#3CE8B3] bg-clip-text">
+                  {f.label}
+                </span>
+                {idx !== features.length - 1 && (
+                  <div className="hidden sm:block absolute top-1/2 right-0 w-px h-6 -translate-y-1/2 bg-gradient-to-b from-[#3CE8B3]/60 to-transparent"></div>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
