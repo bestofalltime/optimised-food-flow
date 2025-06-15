@@ -2,26 +2,21 @@ import { useNavigate } from "react-router-dom";
 const bgImage = "/lovable-uploads/8b5eeac1-aa2e-4fee-ae27-07892dbcf765.png";
 const featuresRow1 = [
   {
-    label: "Real-time POS syncing",
-    icon: "📈"
+    label: "Real-time POS syncing"
   },
   {
-    label: "Smart ordering + forecasting",
-    icon: "🤖"
+    label: "Smart ordering + forecasting"
   },
   {
-    label: "FIFO expiry logic",
-    icon: "⏳"
+    label: "FIFO expiry logic"
   },
 ];
 const featuresRow2 = [
   {
-    label: "Staff accountability tools",
-    icon: "🧑‍🍳"
+    label: "Staff accountability tools"
   },
   {
-    label: "Mobile + desktop access",
-    icon: "📱"
+    label: "Mobile + desktop access"
   }
 ];
 const valueStats = [
@@ -114,7 +109,6 @@ export default function LandingPage() {
               ">
               {featuresRow1.map((f) => (
                 <li key={f.label} className="relative text-center min-w-[160px] sm:min-w-[200px] px-2 flex flex-col items-center justify-center">
-                  <span className="inline-block text-3xl mb-1">{f.icon}</span>
                   <span className="inline-block text-lg sm:text-xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight text-center py-0 mx-[5px]">
                     {f.label}
                   </span>
@@ -127,7 +121,6 @@ export default function LandingPage() {
             <ul className="flex flex-col sm:flex-row gap-6 items-center justify-center">
               {featuresRow2.map((f) => (
                 <li key={f.label} className="relative text-center min-w-[160px] sm:min-w-[200px] px-2 flex flex-col items-center justify-center">
-                  <span className="inline-block text-3xl mb-1">{f.icon}</span>
                   <span className="inline-block text-lg sm:text-xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight text-center py-0 mx-[5px]">
                     {f.label}
                   </span>
