@@ -1,7 +1,8 @@
+
 import { useState } from "react";
 import { Dashboard } from "@/components/Dashboard";
 import { InventoryLog } from "@/components/InventoryLog";
-import { VarianceForecast } from "@/components/VarianceForecast";
+import { VarianceReports } from "@/components/VarianceReports";
 import { WasteLog } from "@/components/WasteLog";
 import { OrderingAssistant } from "@/components/OrderingAssistant";
 import { SystemSettings } from "@/components/SystemSettings";
@@ -17,7 +18,7 @@ const Index = () => {
       case "inventory":
         return <InventoryLog />;
       case "variance":
-        return <VarianceForecast />;
+        return <VarianceReports />;
       case "waste":
         return <WasteLog />;
       case "ordering":
