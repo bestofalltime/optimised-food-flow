@@ -140,16 +140,31 @@ export default function LandingPage() {
       {/* Pricing Plans */}
       <section className="max-w-5xl mx-auto py-8 px-4">
         <div className="flex flex-col md:flex-row gap-8 md:gap-4 items-center md:items-stretch justify-center w-full">
-          {plans.map(plan => <div key={plan.name} className={`flex-1 rounded-2xl border-2 ${plan.color} p-6 flex flex-col items-center min-w-[220px]`}>
-              <div className="text-2xl font-bold mb-2">{plan.name}</div>
-              <div className={accent + " text-3xl font-bold mb-3"}>{plan.price}</div>
-              <ul className="mb-6 space-y-1 text-white/90">
-                {plan.details.map(detail => <li key={detail}>• {detail}</li>)}
-              </ul>
-              <button className="bg-[#3CE8B3] w-full py-2 rounded font-bold text-[#0D1A2B] hover:bg-[#33b392] transition mb-2" onClick={() => nav("/signup")}>
+          {plans.map(plan => (
+            <div
+              key={plan.name}
+              className={`flex-1 rounded-2xl border-2 ${plan.color} p-6 flex flex-col justify-between min-w-[220px] h-full`}
+              style={{ minHeight: "340px" }}
+            >
+              <div>
+                <div className="text-2xl font-bold mb-2">{plan.name}</div>
+                <div className={accent + " text-3xl font-bold mb-3"}>
+                  {plan.price}
+                </div>
+                <ul className="mb-6 space-y-1 text-white/90">
+                  {plan.details.map(detail => (
+                    <li key={detail}>• {detail}</li>
+                  ))}
+                </ul>
+              </div>
+              <button
+                className="bg-[#3CE8B3] w-full py-2 rounded font-bold text-[#0D1A2B] hover:bg-[#33b392] transition mb-2 mt-auto"
+                onClick={() => nav("/signup")}
+              >
                 {plan.cta}
               </button>
-            </div>)}
+            </div>
+          ))}
         </div>
         {/* Toggle Monthly/Yearly (not functional yet) */}
         <div className="text-center text-white/50 text-xs mt-4">
