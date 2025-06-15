@@ -120,7 +120,7 @@ export default function LandingPage() {
       </section>
 
       {/* Value Block */}
-      <section className="max-w-5xl mx-auto px-4 py-[100px]">
+      <section className="max-w-3xl mx-auto px-4 py-[100px]">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           {valueStats.map(({
           stat,
