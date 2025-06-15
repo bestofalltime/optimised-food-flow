@@ -103,6 +103,7 @@ const bgOverlay = "bg-black/60";
 
 export default function LandingPage() {
   const nav = useNavigate();
+  // Grid positions: want Staff accountability (index 3) and Mobile + desktop access (index 4) on the bottom row
   return (
     <div className={`w-full min-h-screen ${bgDark} text-white`}>
       {/* Hero */}
@@ -153,17 +154,39 @@ export default function LandingPage() {
               px-0
             "
           >
-            {features.map((f, idx) => (
-              <li
-                key={f.label}
-                className="relative text-center min-w-[160px] sm:min-w-[200px] px-2"
-              >
-                <span className="inline-block text-xl sm:text-2xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight">
-                  {f.label}
-                </span>
-                {/* Remove vertical divider for grid version */}
-              </li>
-            ))}
+            {/* Top row: 0,1,2; Bottom row: 3,4 */}
+            {features.map((f, idx) => {
+              let gridClass = "";
+              if (idx === 3) {
+                // "Staff accountability tools"
+                gridClass =
+                  "sm:col-start-1 sm:row-start-2 md:col-start-4 md:row-start-2";
+              } else if (idx === 4) {
+                // "Mobile + desktop access"
+                gridClass =
+                  "sm:col-start-2 sm:row-start-2 md:col-start-5 md:row-start-2";
+              } else if (idx === 0) {
+                gridClass =
+                  "sm:col-start-1 sm:row-start-1 md:col-start-1 md:row-start-1";
+              } else if (idx === 1) {
+                gridClass =
+                  "sm:col-start-2 sm:row-start-1 md:col-start-2 md:row-start-1";
+              } else if (idx === 2) {
+                gridClass =
+                  "sm:col-start-3 sm:row-start-1 md:col-start-3 md:row-start-1";
+              }
+              return (
+                <li
+                  key={f.label}
+                  className={`relative text-center min-w-[160px] sm:min-w-[200px] px-2 ${gridClass}`}
+                >
+                  <span className="inline-block text-xl sm:text-2xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight">
+                    {f.label}
+                  </span>
+                  {/* Remove vertical divider for grid version */}
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>
