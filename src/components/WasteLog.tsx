@@ -180,17 +180,17 @@ const getFlaggedAlertBadge = (level: string) => {
   switch (level) {
     case "high": return (
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border font-semibold text-xs bg-red-600/20 text-red-400 border-red-500/40">
-        🔴 High
+        High
       </span>
     );
     case "medium": return (
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border font-semibold text-xs bg-yellow-400/20 text-yellow-700 border-yellow-400/30">
-        🟡 Medium
+        Medium
       </span>
     );
     default: return (
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border font-semibold text-xs bg-green-500/20 text-green-300 border-green-600/30">
-        🟢
+        Normal
       </span>
     );
   }
@@ -450,12 +450,10 @@ export const WasteLog = () => {
           <div className="flex items-center gap-2 bg-red-600/90 text-white font-semibold px-4 py-2 rounded-lg shadow text-sm">
             <span>Potential Theft Cases Detected:</span>
             <span className="font-bold">{flaggedTheftRows.length} items</span>
-            <span>🔴</span>
           </div>
           <div className="flex items-center gap-2 bg-yellow-400/80 text-yellow-900 font-semibold px-4 py-2 rounded-lg shadow text-sm">
             <span>Unlogged Expiry Waste:</span>
             <span className="font-bold">{flaggedExpiryRows.filter(r=>!r.logged).length} ingredients</span>
-            <span className="ml-1">⏳</span>
           </div>
         </div>
 
@@ -463,7 +461,7 @@ export const WasteLog = () => {
           {/* A. Potential Theft Indicators */}
           <div className="flex-1 min-w-[330px]">
             <h3 className="text-lg text-white font-semibold mb-3 flex items-center gap-2">
-              🔓 Potential Theft Indicators
+              Potential Theft Indicators
             </h3>
             <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden">
               <table className="w-full divide-y divide-white/10">
@@ -518,7 +516,7 @@ export const WasteLog = () => {
           {/* B. Expiry-Related Waste Tracker */}
           <div className="flex-1 min-w-[330px]">
             <h3 className="text-lg text-white font-semibold mb-3 flex items-center gap-2">
-              ⏳ Expiry-Related Waste Tracker
+              Expiry-Related Waste Tracker
             </h3>
             <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden">
               <table className="w-full divide-y divide-white/10">
@@ -540,11 +538,11 @@ export const WasteLog = () => {
                       <td className="px-4 py-3">
                         {row.logged ? (
                           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border font-semibold text-xs bg-green-500/20 text-green-300 border-green-600/30">
-                            <CheckCircle className="inline-block mr-0.5" size={16}/> Yes
+                            Yes
                           </span>
                         ) : (
                           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border font-semibold text-xs bg-red-600/20 text-red-400 border-red-500/40">
-                            <XCircle className="inline-block mr-0.5" size={16}/> No
+                            No
                           </span>
                         )}
                       </td>
