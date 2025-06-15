@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -37,7 +36,7 @@ export default function SignupPage() {
     if (values.password.length < 6) err.password = "Min 6 characters";
     if (!values.confirm) err.confirm = "Required";
     if (values.confirm !== values.password) err.confirm = "Passwords must match";
-    if (!values.branch) err.branch = "Please select a branch count";
+    if (!values.branches) err.branches = "Please select a branch count";
     return err;
   };
 
@@ -163,9 +162,9 @@ export default function SignupPage() {
           
           <label className="text-white font-semibold">Branch Count</label>
           <select
-            className={`rounded p-2 bg-[#22344d] text-white border ${touched.branch && errors.branch ? "border-red-500" : "border-[#3CE8B3]"}`}
-            name="branch"
-            value={values.branch || ""}
+            className={`rounded p-2 bg-[#22344d] text-white border ${touched.branches && errors.branches ? "border-red-500" : "border-[#3CE8B3]"}`}
+            name="branches"
+            value={values.branches || ""}
             onChange={handleChange}
           >
             <option value="">Select</option>
@@ -173,7 +172,7 @@ export default function SignupPage() {
               <option value={opt.value} key={opt.value}>{opt.label}</option>
             ))}
           </select>
-          {touched.branch && errors.branch && <p className="text-red-400 text-sm">{errors.branch}</p>}
+          {touched.branches && errors.branches && <p className="text-red-400 text-sm">{errors.branches}</p>}
         </div>
         <button
           className="mt-6 bg-[#3CE8B3] text-[#0D1A2B] font-extrabold rounded-full py-3 transition hover:bg-[#33b392] disabled:opacity-40"
