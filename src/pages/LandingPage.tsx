@@ -73,7 +73,7 @@ export default function LandingPage() {
           <img
             src={bgImage}
             alt="OptiMised Logo"
-            className="w-72 h-72 object-contain bg-transparent opacity-95 drop-shadow-[0_0_64px_#3ce8b394]"
+            className="w-72 h-72 object-contain bg-transparent opacity-95"
             style={{
               backgroundColor: "transparent",
               WebkitMaskImage:
