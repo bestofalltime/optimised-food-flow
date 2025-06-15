@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,6 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import LandingPage from "@/pages/LandingPage";
 import SignupPage from "@/pages/SignupPage";
+import SetupWizard from "@/pages/SetupWizard"; // NEW
 
 const queryClient = new QueryClient();
 
@@ -17,13 +19,10 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          {/* New landing and signup routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/signup" element={<SignupPage />} />
-
+          <Route path="/setup" element={<SetupWizard />} /> {/* NEW */}
           <Route path="/dashboard" element={<Index />} />
-
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<LandingPage />} />
         </Routes>
       </BrowserRouter>
