@@ -66,24 +66,23 @@ export default function LandingPage() {
       }}>
         <div className="absolute inset-0 pointer-events-none" />
         <div className="relative z-10 w-full flex flex-col items-center p-8 text-center py-[50px]">
-          {/* Logo: larger, brightness lower, contrast lower, sharpness higher, opacity 60% */}
-          <div className="flex items-center justify-center" style={{
-            backgroundColor: "#0D1A2B",
-            borderRadius: "50%"
-          }}>
+          {/* Logo: larger, brightness lower, contrast lower, sharpness higher, opacity 60%, circular frame with more translucent border */}
+          <div
+            className="flex items-center justify-center rounded-full border-4 border-white/20 bg-[#0d1a2b]/70"
+          >
             <img
               src={bgImage}
               alt="OptiMised Logo"
               style={{
                 opacity: 0.6,
-                filter: "brightness(1.05) contrast(0.9) drop-shadow(0 0 6px white)",
-                backgroundColor: "#0D1A2B",
+                filter: "brightness(1.05) contrast(0.9) drop-shadow(0 0 0px white)", // minimal shadow for clarity
+                backgroundColor: "transparent",
                 WebkitMaskImage:
                   "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)",
                 maskImage:
                   "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)"
               }}
-              className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] bg-transparent object-scale-down"
+              className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] object-scale-down"
             />
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
