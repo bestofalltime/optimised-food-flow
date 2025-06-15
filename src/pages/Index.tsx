@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Dashboard } from "@/components/Dashboard";
 import { InventoryLog } from "@/components/InventoryLog";
