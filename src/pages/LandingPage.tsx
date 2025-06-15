@@ -171,6 +171,7 @@ export default function LandingPage() {
 
       {/* Pricing Plans */}
       <section className="max-w-5xl mx-auto py-8 px-4">
+        <h2 className="text-3xl font-bold text-center mb-8">Choose the Plan That Fits Your Kitchen</h2>
         <div className="flex flex-col md:flex-row gap-8 md:gap-4 items-center md:items-stretch justify-center w-full">
           {plans.map(plan => (
             <div
