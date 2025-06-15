@@ -58,25 +58,33 @@ const bgDark = "bg-[#0D1A2B]";
 const bgOverlay = "bg-black/60";
 export default function LandingPage() {
   const nav = useNavigate();
-  return <div className={`w-full min-h-screen ${bgDark} text-white`}>
+  return (
+    <div className={`w-full min-h-screen ${bgDark} text-white`}>
       {/* Hero */}
       <div className="relative min-h-[60vh] flex items-center lg:items-end p-0" style={{
-      background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
-    }}>
+        background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
+      }}>
         <div className="absolute inset-0 pointer-events-none" />
         <div className="relative z-10 w-full flex flex-col items-center p-8 text-center py-[50px]">
-          {/* Logo: clear center, more blurred edges, blends with background */}
+          {/* Logo: larger, brightness lower, contrast lower, sharpness higher, opacity 60% */}
           <div className="flex items-center justify-center" style={{
-          backgroundColor: "#0D1A2B",
-          borderRadius: "50%"
-        }}>
-            <img src={bgImage} alt="OptiMised Logo" style={{
-            opacity: 0.65,
-            filter: "brightness(1.15)",
             backgroundColor: "#0D1A2B",
-            WebkitMaskImage: "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)",
-            maskImage: "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)"
-          }} className="w-96 h-96 bg-transparent brightness-110 object-scale-down" />
+            borderRadius: "50%"
+          }}>
+            <img
+              src={bgImage}
+              alt="OptiMised Logo"
+              style={{
+                opacity: 0.6,
+                filter: "brightness(1.05) contrast(0.9) drop-shadow(0 0 6px white)",
+                backgroundColor: "#0D1A2B",
+                WebkitMaskImage:
+                  "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)",
+                maskImage:
+                  "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)"
+              }}
+              className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] bg-transparent object-scale-down"
+            />
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
             Inventory Intelligence for Restaurants That Want to{" "}
@@ -173,5 +181,6 @@ export default function LandingPage() {
           Get Started
         </button>
       </section>
-    </div>;
+    </div>
+  );
 }
