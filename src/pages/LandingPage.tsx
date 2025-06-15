@@ -64,7 +64,7 @@ export default function LandingPage() {
       background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
     }}>
         <div className="absolute inset-0 pointer-events-none" />
-        <div className="relative z-10 w-full flex flex-col items-center p-8 text-center">
+        <div className="relative z-10 w-full flex flex-col items-center p-8 text-center py-[50px]">
           {/* Logo: clear center, more blurred edges, blends with background */}
           <div className="flex items-center justify-center" style={{
           backgroundColor: "#0D1A2B",
