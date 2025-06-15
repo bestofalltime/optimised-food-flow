@@ -81,8 +81,9 @@ export default function LandingPage() {
               style={{
                 backgroundColor: "#0D1A2B",
                 WebkitMaskImage:
-                  "radial-gradient(circle at 50% 50%, white 40%, transparent 100%)",
-                maskImage: "radial-gradient(circle at 50% 50%, white 40%, transparent 100%)",
+                  "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)",
+                maskImage:
+                  "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)",
               }}
             />
           </div>
