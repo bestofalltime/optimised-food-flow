@@ -58,20 +58,33 @@ const bgDark = "bg-[#0D1A2B]";
 const bgOverlay = "bg-black/60";
 export default function LandingPage() {
   const nav = useNavigate();
-  return <div className={`w-full min-h-screen ${bgDark} text-white`}>
+  return (
+    <div className={`w-full min-h-screen ${bgDark} text-white`}>
       {/* Hero */}
-      <div className="relative min-h-[60vh] flex items-center lg:items-end p-0" style={{
-      background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
-    }}>
+      <div
+        className="relative min-h-[60vh] flex items-center lg:items-end p-0"
+        style={{
+          background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
+        }}
+      >
         <div className="absolute inset-0 pointer-events-none" />
         <div className="relative z-10 w-full max-w-4xl mx-auto p-8 text-center flex flex-col items-center">
-          <img src={bgImage} alt="OptiMised Logo" className="w-24 h-24 mb-6 shadow-lg object-cover" />
+          {/* Modified hero image to remove background and fit frame */}
+          <img
+            src={bgImage}
+            alt="OptiMised Logo"
+            className="w-24 h-24 mb-6 shadow-lg object-contain bg-transparent"
+            style={{ backgroundColor: "transparent" }}
+          />
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-lg">
             Inventory Intelligence for Restaurants That Want to{" "}
             <span className={accent}>Waste Less</span>, Earn{" "}
             <span className={accent}>More</span>.
           </h1>
-          <button className={`mt-6 px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg shadow-lg hover:bg-[#33b392] transition`} onClick={() => nav("/signup")}>
+          <button
+            className={`mt-6 px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg shadow-lg hover:bg-[#33b392] transition`}
+            onClick={() => nav("/signup")}
+          >
             Start for Free
           </button>
         </div>
@@ -161,5 +174,6 @@ export default function LandingPage() {
           Get Started
         </button>
       </section>
-    </div>;
+    </div>
+  );
 }
