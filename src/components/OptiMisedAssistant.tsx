@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
@@ -86,6 +86,25 @@ function timeAgo(date: Date) {
 }
 
 // Add AnimatedMessage component just above OptiMisedAssistant export.
+const MAX_BUBBLE_LENGTH = 220; // chars, for splitting answers nicely
+
+// Helper to split lines into "chat bubbles" below length limit
+function splitBubbles(lines: string[]): string[] {
+  const result: string[] = [];
+  let buf = "";
+  for (const line of lines) {
+    // Try add line to buffer
+    if ((buf + (buf ? " " : "") + line).length <= MAX_BUBBLE_LENGTH) {
+      buf += (buf ? " " : "") + line;
+    } else {
+      if (buf) result.push(buf);
+      buf = line;
+    }
+  }
+  if (buf) result.push(buf);
+  return result;
+}
+
 const AnimatedMessage: React.FC<{ text: string, onDone?: () => void, className?: string }> = ({ text, onDone, className }) => {
   const [displayed, setDisplayed] = useState("");
   const index = useRef(0);
@@ -118,6 +137,7 @@ export const OptiMisedAssistant: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>(preloadMessages);
   const [input, setInput] = useState("");
   const [isBotTyping, setBotTyping] = useState(false);
+  const [pendingBubbles, setPendingBubbles] = useState<string[] | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -135,7 +155,7 @@ export const OptiMisedAssistant: React.FC = () => {
     if (chatEndRef.current) {
       chatEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages, open]);
+  }, [messages, open, isBotTyping]);
 
   function handleOpenChange(val: boolean) {
     setOpen(val);
@@ -152,26 +172,41 @@ export const OptiMisedAssistant: React.FC = () => {
     ]);
   }
 
-  function pushAssistantMessage(msgs: string[]) {
+  // New: Main mechanism for animated multi-bubble assistant reply
+  const pushAssistantMultiMessage = useCallback((msgs: string[]) => {
+    const bubbles = splitBubbles(msgs);
+
+    function nextBubble(idx = 0) {
+      if (!bubbles[idx]) {
+        setBotTyping(false);
+        setPendingBubbles(null);
+        return;
+      }
+      setMessages(prev => [
+        ...prev,
+        { role: "assistant", content: bubbles[idx], ts: new Date(), isFakeTyping: false }
+      ]);
+      if (bubbles.length > idx + 1) {
+        setTimeout(() => nextBubble(idx + 1), Math.max(1200, 600 + bubbles[idx].length * 18));
+      } else {
+        setBotTyping(false);
+        setPendingBubbles(null);
+      }
+    }
+
     setBotTyping(true);
-    setMessages((prev) => [
+    setPendingBubbles(bubbles); // We track these if needed in UI
+    // Add fake typing only ONCE before first bubble
+    setMessages(prev => [
       ...prev,
       { role: "assistant", content: "", ts: new Date(), isFakeTyping: true },
     ]);
     setTimeout(() => {
-      setMessages((prev) => {
-        const filtered = prev.filter((m) => !m.isFakeTyping);
-        const tsBase = new Date();
-        const extra = msgs.map((reply, i) => ({
-          role: "assistant" as Role,
-          content: reply,
-          ts: new Date(tsBase.getTime() + i * 1000),
-        }));
-        return [...filtered, ...extra];
-      });
-      setBotTyping(false);
-    }, 900 + msgs.length * 400);
-  }
+      // Remove fake typing bubble, then add real bubble(s) one at a time
+      setMessages(prev => prev.filter(m => !m.isFakeTyping));
+      nextBubble(0);
+    }, 900 + bubbles[0].length * 7);
+  }, []);
 
   function onSamplePrompt(prompt: string) {
     setInput(prompt);
@@ -186,9 +221,9 @@ export const OptiMisedAssistant: React.FC = () => {
     if (!trimmed) return;
     pushUserMessage(trimmed);
     setInput("");
-    // Use canned response
+    // Use improved assistant reply logic
     setTimeout(() => {
-      pushAssistantMessage(getAssistantFakeResponse(trimmed));
+      pushAssistantMultiMessage(getAssistantFakeResponse(trimmed));
     }, 600);
   }
 
@@ -245,6 +280,7 @@ export const OptiMisedAssistant: React.FC = () => {
                     ${msg.isFakeTyping ? "bg-gray-100/40 text-gray-400 font-sans" : ""}
                   `}
                   style={{ position: "relative" }}>
+                    {/* Bubble rendering & animation logic */}
                     {msg.isFakeTyping ? (
                       <span className="inline-flex gap-1 animate-pulse">
                         <span className="dot w-2 h-2 rounded-full bg-gray-500 inline-block" />
@@ -253,7 +289,18 @@ export const OptiMisedAssistant: React.FC = () => {
                       </span>
                     ) : (
                       msg.role === "assistant" && isLiveAssistantMessage(msg, idx) ? (
-                        <AnimatedMessage text={msg.content} />
+                        <AnimatedMessage
+                          text={msg.content}
+                          // Only fire onDone for the last bubble being rendered for this reply,
+                          // otherwise just type out normally (otherwise multiple at once)
+                          onDone={
+                            idx === messages.length - 1 &&
+                            isBotTyping &&
+                            pendingBubbles && pendingBubbles.length === 1
+                              ? () => { }
+                              : undefined
+                          }
+                        />
                       ) : (
                         msg.content
                       )
