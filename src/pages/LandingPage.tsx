@@ -69,12 +69,17 @@ export default function LandingPage() {
       >
         <div className="absolute inset-0 pointer-events-none" />
         <div className="relative z-10 w-full max-w-4xl mx-auto p-8 text-center flex flex-col items-center">
-          {/* Logo: simple, transparent, clear */}
+          {/* Logo: clear center, blurred edges, blends with background */}
           <img
             src={bgImage}
             alt="OptiMised Logo"
-            className="w-56 h-56 object-contain bg-transparent opacity-95"
-            style={{ backgroundColor: "transparent" }}
+            className="w-56 h-56 object-contain bg-transparent opacity-95 drop-shadow-2xl"
+            style={{
+              backgroundColor: "transparent",
+              WebkitMaskImage:
+                "radial-gradient(circle at 50% 50%, white 70%, transparent 100%)",
+              maskImage: "radial-gradient(circle at 50% 50%, white 70%, transparent 100%)",
+            }}
           />
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-lg">
             Inventory Intelligence for Restaurants That Want to{" "}
