@@ -61,7 +61,7 @@ const EN_TESTIMONIALS: Testimonial[] = [
 
 const AR_TESTIMONIALS: Testimonial[] = [
   {
-    quote: "وفرنا ٣٥٪ من الهدر خلال أول شهر فقط.",
+    quote: "وفرنا ٢٥٪ من الهدر خلال أول شهر فقط.",
     author: "سارة الحاج",
     role: "مطبخ النخبة",
     lang: "ar",
@@ -193,6 +193,8 @@ export const TestimonialsCarousel: React.FC = () => {
         dir={rtl ? "rtl" : "ltr"}
         className={cn(
           "flex flex-col justify-between rounded-2xl shadow-lg border border-accent/10 bg-white/5 min-w-[320px] max-w-[340px] w-[320px] mx-0",
+          // Make card stretch to fill parent container for equal height
+          "h-full",
           "px-7 py-7 mr-0",
           "transition-transform transition-shadow duration-300",
           "hover:scale-105 hover:shadow-2xl",
@@ -204,6 +206,8 @@ export const TestimonialsCarousel: React.FC = () => {
             ? notoSansAr
             : "'Inter', 'Poppins', 'SF Pro', ui-sans-serif, system-ui",
           marginInlineEnd: CARD_GAP,
+          // balance appearance even more with explicit minHeight
+          minHeight: "320px",
         }}
       >
         <Quote color={ACCENT} size={28} className={rtl ? "ml-2" : "mr-2"} />
@@ -276,8 +280,9 @@ export const TestimonialsCarousel: React.FC = () => {
           background: DARK_BG,
         }}
       >
-        <div className="flex flex-col items-center px-2 py-6 gap-5">
+        <div className="flex flex-col items-stretch px-2 py-6 gap-5">
           {testimonials.map((t, idx) => (
+            // Each card gets h-full in flex-col items-stretch container for even height
             <Card t={t} key={idx} />
           ))}
         </div>
@@ -293,7 +298,8 @@ export const TestimonialsCarousel: React.FC = () => {
       dir={dir}
     >
       <div
-        className="flex gap-6 flex-nowrap overflow-x-scroll no-scrollbar"
+        // Add items-stretch for flex row, so all cards are equal in height
+        className="flex gap-6 flex-nowrap overflow-x-scroll no-scrollbar items-stretch"
         ref={carouselRef}
         tabIndex={0}
         aria-label="Testimonials"
