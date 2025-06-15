@@ -68,7 +68,7 @@ export default function LandingPage() {
       background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
     }}>
         <div className="absolute inset-0 pointer-events-none" />
-        <div className="relative z-10 w-full flex flex-col items-center p-8 text-center py-[30px]">
+        <div className="relative z-10 w-full flex flex-col items-center p-8 text-center py-[50px]">
           {/* Logo: lower brightness, no circular frame, no mask */}
           <div className="flex items-center justify-center">
             <img
@@ -76,10 +76,10 @@ export default function LandingPage() {
               alt="OptiMised Logo"
               style={{
                 opacity: 0.6,
-                filter: "brightness(1.15) contrast(1.0) saturate(0.7)",
+                filter: "brightness(1.22) contrast(0.93) saturate(0.7)",
                 backgroundColor: "transparent"
               }}
-              className="w-[330px] h-[330px] sm:w-[440px] sm:h-[440px] md:w-[550px] md:h-[550px] object-scale-down"
+              className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] object-scale-down"
             />
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 py-0">
