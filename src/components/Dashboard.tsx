@@ -9,7 +9,7 @@ import { QuickActions } from "./QuickActions";
 import { POSConnectionCard } from "./POSConnectionCard";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "./ui/dialog";
 import { Button } from "./ui/button";
-import { ChevronDown, FilePdf, FileCsv, BadgeAlert } from "lucide-react";
+import { ChevronDown, File, Files, BadgeAlert } from "lucide-react";
 
 // Visual-only state for Waste Trend Chart selector
 const chartViews = [
@@ -152,11 +152,11 @@ export const Dashboard = () => {
               {/* Here just static */}
             </div>
             <Button size="sm" variant="outline">
-              <FilePdf className="mr-1" size={16} />
+              <File className="mr-1" size={16} />
               Download PDF
             </Button>
             <Button size="sm" variant="outline">
-              <FileCsv className="mr-1" size={16} />
+              <Files className="mr-1" size={16} />
               Download CSV
             </Button>
           </div>
@@ -187,4 +187,3 @@ export const Dashboard = () => {
     </div>
   );
 };
-
