@@ -66,24 +66,21 @@ export default function LandingPage() {
       }}>
         <div className="absolute inset-0 pointer-events-none" />
         <div className="relative z-10 w-full flex flex-col items-center p-8 text-center py-[50px]">
-          {/* Logo: larger, brightness lower, contrast lower, sharpness higher, opacity 60% */}
+          {/* Logo: fit frame, no round edges, no mask, no shadow */}
           <div className="flex items-center justify-center" style={{
-            backgroundColor: "#0D1A2B",
-            borderRadius: "50%"
+            backgroundColor: "#0D1A2B"
+            // No border radius
           }}>
             <img
               src={bgImage}
               alt="OptiMised Logo"
               style={{
                 opacity: 0.6,
-                filter: "brightness(1.05) contrast(0.9)",
-                backgroundColor: "#0D1A2B",
-                WebkitMaskImage:
-                  "radial-gradient(circle at 50% 50%, white 40%, rgba(255,255,255,0.2) 75%, transparent 100%)",
-                maskImage:
-                  "radial-gradient(circle at 50% 50%, white 40%, rgba(255,255,255,0.2) 75%, transparent 100%)"
+                filter: "brightness(0.98) contrast(0.9) saturate(1.2) grayscale(0.02) drop-shadow(0 0 0 transparent)", // Still subtly lower brightness/contrast
+                backgroundColor: "#0D1A2B"
+                // No maskImage, no WebkitMaskImage
               }}
-              className="w-[350px] h-[350px] sm:w-[480px] sm:h-[480px] md:w-[600px] md:h-[600px] bg-transparent object-scale-down"
+              className="w-[350px] h-[350px] sm:w-[480px] sm:h-[480px] md:w-[600px] md:h-[600px] bg-transparent object-contain"
             />
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
