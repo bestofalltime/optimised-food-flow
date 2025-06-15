@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Google } from "lucide-react";
 
 const bgDark = "bg-[#0D1A2B]";
 const teal = "#3CE8B3";
@@ -74,6 +75,23 @@ export default function SignupPage() {
     }, 1500);
   }
 
+  // Handlers for social sign up (placeholders)
+  function handleGoogleSignup() {
+    if ((window as any).toast) {
+      (window as any).toast("Google sign up is not implemented", { type: "info" });
+    }
+  }
+  function handleFacebookSignup() {
+    if ((window as any).toast) {
+      (window as any).toast("Facebook sign up is not implemented", { type: "info" });
+    }
+  }
+  function handleAppleSignup() {
+    if ((window as any).toast) {
+      (window as any).toast("Apple sign up is not implemented", { type: "info" });
+    }
+  }
+
   return (
     <div className={`${bgDark} min-h-screen w-full flex items-center justify-center`}>
       <form
@@ -95,6 +113,45 @@ export default function SignupPage() {
           />
           <h2 className="text-2xl font-bold text-white">Get Started with OptiMised</h2>
         </div>
+        {/* Social Signup Buttons */}
+        <div className="flex flex-col gap-3 mb-8">
+          <button
+            type="button"
+            onClick={handleGoogleSignup}
+            className="flex items-center justify-center gap-2 rounded-lg bg-white/90 hover:bg-white text-[#0D1A2B] font-semibold px-6 py-2 shadow transition border border-white/50"
+          >
+            <Google className="w-5 h-5" />
+            Sign up with Google
+          </button>
+          <button
+            type="button"
+            onClick={handleFacebookSignup}
+            className="flex items-center justify-center gap-2 rounded-lg bg-[#1977f3] hover:bg-[#1666c1]/95 text-white font-semibold px-6 py-2 shadow transition"
+          >
+            {/* fb svg */}
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="white" viewBox="0 0 24 24">
+              <path d="M22.676 0H1.326C.593 0 0 .592 0 1.324v21.351C0 23.406.593 24 1.326 24h11.495v-9.294H9.691V11.01h3.13V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.142v3.24l-1.92.001c-1.504 0-1.797.715-1.797 1.763v2.314h3.59l-.467 3.696h-3.123V24h6.116C23.406 24 24 23.406 24 22.676V1.324C24 .592 23.406 0 22.676 0"/>
+            </svg>
+            Sign up with Facebook
+          </button>
+          <button
+            type="button"
+            onClick={handleAppleSignup}
+            className="flex items-center justify-center gap-2 rounded-lg bg-[#121212] hover:bg-black/90 text-white font-semibold px-6 py-2 shadow transition"
+          >
+            {/* apple svg */}
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="white" viewBox="0 0 24 24">
+              <path d="M16.68 1.907c0 1.495-1.123 2.685-2.663 2.685-.037 0-.073 0-.11-.002-.07-1.465 1.156-2.635 2.645-2.683.044 0 .088 0 .133.001.002 0 .002 0 0 0zm4.899 16.584c-.155.447-3.062 8.399-6.09 8.507-2.714.099-3.42-1.64-6.381-1.64-2.944 0-3.643 1.641-6.399 1.641C.63 26.037.019 19.075 1.594 15.644c.736-1.624 2.146-2.595 4.033-2.595 2.218 0 3.164 1.408 6.393 1.408h.016c3.194-.017 3.946-1.408 6.379-1.408 1.659 0 3.053.84 3.843 2.077.019.037 0 .079 0 .123 0 .212.014.427-.021.635z"/>
+            </svg>
+            Sign up with Apple
+          </button>
+          <div className="flex items-center my-2 text-white/30 gap-2 select-none">
+            <span className="flex-1 border-t border-white/20" />
+            <span className="text-xs font-medium">or</span>
+            <span className="flex-1 border-t border-white/20" />
+          </div>
+        </div>
+        {/* Registration Form */}
         <div className="flex flex-col gap-4">
           <label className="text-white font-semibold" htmlFor="restaurant">Restaurant Name</label>
           <input
