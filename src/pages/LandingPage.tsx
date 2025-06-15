@@ -109,7 +109,7 @@ export default function LandingPage() {
               ">
               {featuresRow1.map((f) => (
                 <li key={f.label} className="relative text-center min-w-[160px] sm:min-w-[200px] px-2 flex flex-col items-center justify-center">
-                  <span className="inline-block text-lg sm:text-xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight text-center py-0 mx-[5px]">
+                  <span className="inline-block text-xl sm:text-2xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight text-center py-0 mx-[5px]">
                     {f.label}
                   </span>
                 </li>
@@ -121,7 +121,7 @@ export default function LandingPage() {
             <ul className="flex flex-col sm:flex-row gap-6 items-center justify-center">
               {featuresRow2.map((f) => (
                 <li key={f.label} className="relative text-center min-w-[160px] sm:min-w-[200px] px-2 flex flex-col items-center justify-center">
-                  <span className="inline-block text-lg sm:text-xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight text-center py-0 mx-[5px]">
+                  <span className="inline-block text-xl sm:text-2xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight text-center py-0 mx-[5px]">
                     {f.label}
                   </span>
                 </li>
