@@ -58,46 +58,32 @@ const bgDark = "bg-[#0D1A2B]";
 const bgOverlay = "bg-black/60";
 export default function LandingPage() {
   const nav = useNavigate();
-  return (
-    <div className={`w-full min-h-screen ${bgDark} text-white`}>
+  return <div className={`w-full min-h-screen ${bgDark} text-white`}>
       {/* Hero */}
-      <div
-        className="relative min-h-[60vh] flex items-center lg:items-end p-0"
-        style={{
-          background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
-        }}
-      >
+      <div className="relative min-h-[60vh] flex items-center lg:items-end p-0" style={{
+      background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
+    }}>
         <div className="absolute inset-0 pointer-events-none" />
         <div className="relative z-10 w-full flex flex-col items-center p-8 text-center">
           {/* Logo: clear center, more blurred edges, blends with background */}
-          <div
-            className="flex items-center justify-center"
-            style={{ backgroundColor: "#0D1A2B", borderRadius: "50%" }}
-          >
-            <img
-              src={bgImage}
-              alt="OptiMised Logo"
-              className="w-96 h-96 object-contain bg-transparent brightness-110"
-              style={{
-                opacity: 0.65,
-                filter: "brightness(1.15)",
-                backgroundColor: "#0D1A2B",
-                WebkitMaskImage:
-                  "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)",
-                maskImage:
-                  "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)",
-              }}
-            />
+          <div className="flex items-center justify-center" style={{
+          backgroundColor: "#0D1A2B",
+          borderRadius: "50%"
+        }}>
+            <img src={bgImage} alt="OptiMised Logo" className="w-96 h-96 object-contain bg-transparent brightness-110" style={{
+            opacity: 0.65,
+            filter: "brightness(1.15)",
+            backgroundColor: "#0D1A2B",
+            WebkitMaskImage: "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)",
+            maskImage: "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)"
+          }} />
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
             Inventory Intelligence for Restaurants That Want to{" "}
             <span className={accent}>Waste Less</span>, Earn{" "}
             <span className={accent}>More</span>.
           </h1>
-          <button
-            className={`mt-6 px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg hover:bg-[#33b392] transition`}
-            onClick={() => nav("/signup")}
-          >
+          <button className={`mt-6 px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg hover:bg-[#33b392] transition`} onClick={() => nav("/signup")}>
             Start for Free
           </button>
         </div>
@@ -135,7 +121,7 @@ export default function LandingPage() {
       </section>
 
       {/* Value Block */}
-      <section className="max-w-5xl mx-auto py-8 px-4">
+      <section className="max-w-5xl mx-auto px-4 py-[100px]">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           {valueStats.map(({
           stat,
@@ -187,6 +173,5 @@ export default function LandingPage() {
           Get Started
         </button>
       </section>
-    </div>
-  );
+    </div>;
 }
