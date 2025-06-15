@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Info, Download, CheckCircle, XCircle } from "lucide-react";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
@@ -129,11 +128,82 @@ const wasteLogRows = [
   },
 ];
 
+// New: Flagged Waste Patterns dummy data
+const flaggedTheftRows = [
+  {
+    ingredient: "Cheese Slices",
+    drop: "-12% daily drop",
+    evidence: "Logged usage > POS sales",
+    alert: "high",
+    action: "flag"
+  },
+  {
+    ingredient: "Chicken Breast",
+    drop: "Late night variance",
+    evidence: "No POS logs past 11PM",
+    alert: "medium",
+    action: "view"
+  },
+  {
+    ingredient: "Milk",
+    drop: "Extra manual edits",
+    evidence: "Adjusted 3x without note",
+    alert: "high",
+    action: "flag"
+  }
+];
+const flaggedExpiryRows = [
+  {
+    ingredient: "Tomatoes",
+    qty: "4.2 kg",
+    logged: true,
+    remaining: "7.1 kg",
+    action: "review"
+  },
+  {
+    ingredient: "Lettuce",
+    qty: "3.0 kg",
+    logged: false,
+    remaining: "2.3 kg",
+    action: "log"
+  },
+  {
+    ingredient: "Bread Rolls",
+    qty: "1.5 kg",
+    logged: false,
+    remaining: "0",
+    action: "auto"
+  }
+];
+// Helper badge for alert levels in theft section
+const getFlaggedAlertBadge = (level: string) => {
+  switch (level) {
+    case "high": return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border font-semibold text-xs bg-red-600/20 text-red-400 border-red-500/40">
+        🔴 High
+      </span>
+    );
+    case "medium": return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border font-semibold text-xs bg-yellow-400/20 text-yellow-700 border-yellow-400/30">
+        🟡 Medium
+      </span>
+    );
+    default: return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border font-semibold text-xs bg-green-500/20 text-green-300 border-green-600/30">
+        🟢
+      </span>
+    );
+  }
+};
+
 export const WasteLog = () => {
   // Modal for discrepancy row
   const [openDiscrepancyModal, setOpenDiscrepancyModal] = useState<null | typeof discrepancyRows[0]>(null);
   // Modal for manual log
   const [openLogWaste, setOpenLogWaste] = useState(false);
+
+  // New: state for flagged waste pattern modals
+  const [openPatternModal, setOpenPatternModal] = useState<null | { type: "theft"|"expiry", idx: number }>(null);
 
   // --- Waste Log Modal state (dummy, not functional) ---
   const [selectedIngredient, setSelectedIngredient] = useState("");
@@ -370,6 +440,211 @@ export const WasteLog = () => {
               </Button>
             </DialogFooter>
           </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* ─────────────── Flagged Waste Patterns SECTION ─────────────── */}
+      <section className="max-w-full mt-4 mb-28">
+        {/* Summary Bar */}
+        <div className="w-full flex flex-col sm:flex-row gap-3 items-start sm:items-center mb-4">
+          <div className="flex items-center gap-2 bg-red-600/90 text-white font-semibold px-4 py-2 rounded-lg shadow text-sm">
+            <span>Potential Theft Cases Detected:</span>
+            <span className="font-bold">{flaggedTheftRows.length} items</span>
+            <span>🔴</span>
+          </div>
+          <div className="flex items-center gap-2 bg-yellow-400/80 text-yellow-900 font-semibold px-4 py-2 rounded-lg shadow text-sm">
+            <span>Unlogged Expiry Waste:</span>
+            <span className="font-bold">{flaggedExpiryRows.filter(r=>!r.logged).length} ingredients</span>
+            <span className="ml-1">⏳</span>
+          </div>
+        </div>
+
+        <div className="flex flex-col xl:flex-row gap-6">
+          {/* A. Potential Theft Indicators */}
+          <div className="flex-1 min-w-[330px]">
+            <h3 className="text-lg text-white font-semibold mb-3 flex items-center gap-2">
+              🔓 Potential Theft Indicators
+            </h3>
+            <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden">
+              <table className="w-full divide-y divide-white/10">
+                <thead className="bg-white/10">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-bold text-white/70">Ingredient</th>
+                    <th className="px-4 py-3 text-left text-xs font-bold text-white/70">Drop Pattern</th>
+                    <th className="px-4 py-3 text-left text-xs font-bold text-white/70">Evidence Type</th>
+                    <th className="px-4 py-3 text-left text-xs font-bold text-white/70">
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span className="cursor-help">Alert Level</span>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          Detected mismatch between POS activity and real inventory usage.
+                        </TooltipContent>
+                      </Tooltip>
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-bold text-white/70">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {flaggedTheftRows.map((row, idx) => (
+                    <tr key={row.ingredient}
+                        className={`${idx % 2 === 0 ? "bg-white/5" : ""} hover:shadow-[0_0_10px_0_rgba(239,68,68,0.13)] cursor-pointer transition-shadow`}>
+                      <td className="px-4 py-3 text-white">{row.ingredient}</td>
+                      <td className="px-4 py-3 text-white/90">{row.drop}</td>
+                      <td className="px-4 py-3 text-white/80">{row.evidence}</td>
+                      <td className="px-4 py-3">{getFlaggedAlertBadge(row.alert)}</td>
+                      <td className="px-4 py-3">
+                        {row.action === "flag" ? (
+                          <button
+                            className="rounded bg-red-500/90 hover:bg-red-700/80 px-3 py-1 text-xs font-bold text-white shadow border-none"
+                            onClick={() => setOpenPatternModal({type:'theft', idx})}
+                            type="button"
+                          >Flag</button>
+                        ) : (
+                          <button
+                            className="rounded bg-yellow-400/80 hover:bg-yellow-300 px-3 py-1 text-xs font-bold text-yellow-950 shadow border-none"
+                            onClick={() => setOpenPatternModal({type:'theft', idx})}
+                            type="button"
+                          >View</button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* B. Expiry-Related Waste Tracker */}
+          <div className="flex-1 min-w-[330px]">
+            <h3 className="text-lg text-white font-semibold mb-3 flex items-center gap-2">
+              ⏳ Expiry-Related Waste Tracker
+            </h3>
+            <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden">
+              <table className="w-full divide-y divide-white/10">
+                <thead className="bg-white/10">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-bold text-white/70">Ingredient</th>
+                    <th className="px-4 py-3 text-left text-xs font-bold text-white/70">Qty Expired</th>
+                    <th className="px-4 py-3 text-left text-xs font-bold text-white/70">Logged Waste?</th>
+                    <th className="px-4 py-3 text-left text-xs font-bold text-white/70">Remaining Stock</th>
+                    <th className="px-4 py-3 text-left text-xs font-bold text-white/70">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {flaggedExpiryRows.map((row, idx) => (
+                    <tr key={row.ingredient}
+                        className={`${idx % 2 === 0 ? "bg-white/5" : ""} hover:shadow-[0_0_8px_0_rgba(252,211,77,0.14)]`}>
+                      <td className="px-4 py-3 text-white">{row.ingredient}</td>
+                      <td className="px-4 py-3 text-white/90">{row.qty}</td>
+                      <td className="px-4 py-3">
+                        {row.logged ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border font-semibold text-xs bg-green-500/20 text-green-300 border-green-600/30">
+                            <CheckCircle className="inline-block mr-0.5" size={16}/> Yes
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border font-semibold text-xs bg-red-600/20 text-red-400 border-red-500/40">
+                            <XCircle className="inline-block mr-0.5" size={16}/> No
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 text-white/80">{row.remaining}</td>
+                      <td className="px-4 py-3">
+                        {row.action === "review" ? (
+                          <button
+                            className="rounded bg-sky-500/90 hover:bg-sky-700/80 px-3 py-1 text-xs font-bold text-white shadow border-none"
+                            onClick={() => setOpenPatternModal({type:'expiry', idx})}
+                            type="button"
+                          >Review</button>
+                        ) : row.action === "log" ? (
+                          <button
+                            className="rounded bg-yellow-400/90 hover:bg-yellow-300 px-3 py-1 text-xs font-bold text-yellow-950 shadow border-none"
+                            onClick={() => setOpenPatternModal({type:'expiry', idx})}
+                            type="button"
+                          >Log Now</button>
+                        ) : (
+                          <button
+                            className="rounded bg-neutral-300/90 hover:bg-neutral-400 px-3 py-1 text-xs font-bold text-gray-700 shadow border-none"
+                            type="button"
+                          >Auto-Log</button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pattern Alert Modal (Theft/Expiry details) */}
+      <Dialog open={!!openPatternModal} onOpenChange={(opened) => !opened && setOpenPatternModal(null)}>
+        <DialogContent className="bg-[#142638] border-2 border-teal-400/50 shadow-xl text-white max-w-lg">
+          <DialogHeader>
+            {openPatternModal?.type === "theft" ? (
+              <DialogTitle>
+                Potential Theft Detail – {flaggedTheftRows[openPatternModal.idx].ingredient}
+              </DialogTitle>
+            ): openPatternModal?.type === "expiry" ? (
+              <DialogTitle>
+                Expiry Waste Review – {flaggedExpiryRows[openPatternModal.idx].ingredient}
+              </DialogTitle>
+            ): ""}
+          </DialogHeader>
+          <div className="space-y-4 text-white/90 mt-2">
+            {openPatternModal?.type === "theft" && (
+              <div>
+                <div className="mb-2">
+                  <span className="block font-semibold text-white/80 mb-1">Drop Pattern:</span>
+                  <span className="ml-2">{flaggedTheftRows[openPatternModal.idx].drop}</span>
+                </div>
+                <div className="mb-2">
+                  <span className="block font-semibold text-white/80 mb-1">Evidence Type:</span>
+                  <span className="ml-2">{flaggedTheftRows[openPatternModal.idx].evidence}</span>
+                </div>
+                <div className="mb-2">
+                  <span className="block font-semibold text-white/80 mb-1">Alert Level:</span>
+                  {getFlaggedAlertBadge(flaggedTheftRows[openPatternModal.idx].alert)}
+                </div>
+                <div>
+                  <span className="block font-semibold text-white/80 mb-1">Suggested Action:</span>
+                  <span className="ml-2">Investigate staff log-ins, verify manual usage entries outside business hours.</span>
+                </div>
+              </div>
+            )}
+            {openPatternModal?.type === "expiry" && (
+              <div>
+                <div className="mb-2">
+                  <span className="block font-semibold text-white/80 mb-1">Qty Expired:</span>
+                  <span className="ml-2">{flaggedExpiryRows[openPatternModal.idx].qty}</span>
+                </div>
+                <div className="mb-2">
+                  <span className="block font-semibold text-white/80 mb-1">Waste Logged?</span>
+                  <span className="ml-2">{flaggedExpiryRows[openPatternModal.idx].logged ? "Yes" : "No"}</span>
+                </div>
+                <div className="mb-2">
+                  <span className="block font-semibold text-white/80 mb-1">Remaining Stock:</span>
+                  <span className="ml-2">{flaggedExpiryRows[openPatternModal.idx].remaining}</span>
+                </div>
+                <div>
+                  <span className="block font-semibold text-white/80 mb-1">Suggested Action:</span>
+                  <span className="ml-2">
+                    {flaggedExpiryRows[openPatternModal.idx].logged
+                      ? "No action needed."
+                      : flaggedExpiryRows[openPatternModal.idx].remaining !== "0"
+                        ? "Log the expired waste to keep inventory accurate."
+                        : "Auto-log function will remove expired units."}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+          <DialogFooter className="flex gap-2">
+            <Button variant="outline" onClick={() => setOpenPatternModal(null)}>
+              Close
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
 
