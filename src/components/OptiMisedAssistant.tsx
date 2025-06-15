@@ -85,6 +85,34 @@ function timeAgo(date: Date) {
   return `${diffMin} mins ago`;
 }
 
+// Add AnimatedMessage component just above OptiMisedAssistant export.
+const AnimatedMessage: React.FC<{ text: string, onDone?: () => void, className?: string }> = ({ text, onDone, className }) => {
+  const [displayed, setDisplayed] = useState("");
+  const index = useRef(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    function typeLetter() {
+      if (cancelled) return;
+      setDisplayed(text.slice(0, index.current + 1));
+      if (index.current < text.length - 1) {
+        index.current += 1;
+        setTimeout(typeLetter, Math.random() * 35 + 18); // Randomizes feel
+      } else if (onDone) {
+        setTimeout(onDone, 300);
+      }
+    }
+    typeLetter();
+    return () => {
+      cancelled = true;
+    };
+  }, [text, onDone]);
+
+  return (
+    <span className={className}>{displayed}<span className="inline-block w-2 animate-pulse" /></span>
+  );
+};
+
 export const OptiMisedAssistant: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>(preloadMessages);
@@ -92,6 +120,15 @@ export const OptiMisedAssistant: React.FC = () => {
   const [isBotTyping, setBotTyping] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+
+  // helper to check if a message is a new assistant reply (not preload)
+  function isLiveAssistantMessage(msg: ChatMessage, idx: number) {
+    return (
+      msg.role === "assistant" &&
+      !msg.isFakeTyping &&
+      idx >= preloadMessages.length // only animate live replies, not pre-seeded welcome
+    );
+  }
 
   // Scroll to bottom
   useEffect(() => {
@@ -207,17 +244,20 @@ export const OptiMisedAssistant: React.FC = () => {
                     px-4 py-2 rounded-2xl max-w-[82%] shadow
                     ${msg.isFakeTyping ? "bg-gray-100/40 text-gray-400 font-sans" : ""}
                   `}
-                    style={{ position: "relative" }}>
-                    {msg.isFakeTyping
-                      ? (
-                        <span className="inline-flex gap-1 animate-pulse">
-                          <span className="dot w-2 h-2 rounded-full bg-gray-500 inline-block" />
-                          <span className="dot w-2 h-2 rounded-full bg-gray-400 inline-block" />
-                          <span className="dot w-2 h-2 rounded-full bg-gray-300 inline-block" />
-                        </span>
+                  style={{ position: "relative" }}>
+                    {msg.isFakeTyping ? (
+                      <span className="inline-flex gap-1 animate-pulse">
+                        <span className="dot w-2 h-2 rounded-full bg-gray-500 inline-block" />
+                        <span className="dot w-2 h-2 rounded-full bg-gray-400 inline-block" />
+                        <span className="dot w-2 h-2 rounded-full bg-gray-300 inline-block" />
+                      </span>
+                    ) : (
+                      msg.role === "assistant" && isLiveAssistantMessage(msg, idx) ? (
+                        <AnimatedMessage text={msg.content} />
+                      ) : (
+                        msg.content
                       )
-                      : msg.content
-                    }
+                    )}
                     {!msg.isFakeTyping && (
                       <div className="text-[11px] text-gray-400 text-right pt-1">
                         {timeAgo(msg.ts)}
