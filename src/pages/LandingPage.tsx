@@ -134,20 +134,22 @@ export default function LandingPage() {
       </div>
 
       {/* Features */}
-      <section className="max-w-5xl mx-auto pt-12 pb-2 px-4">
-        <div className="flex flex-col items-center">
-          <h2 className="text-2xl font-bold text-white mb-4">Product Features</h2>
-          <ul className="w-full flex flex-col sm:flex-row sm:justify-between items-center gap-6 sm:gap-0">
+      <section className="max-w-7xl mx-auto pt-12 pb-2 px-2 sm:px-6">
+        <div className="flex flex-col items-center w-full">
+          <h2 className="text-2xl font-bold text-white mb-6 tracking-tight">
+            Product Features
+          </h2>
+          <ul className="w-full flex flex-col sm:flex-row sm:justify-between items-center gap-8 sm:gap-2">
             {features.map((f, idx) => (
               <li
                 key={f.label}
-                className="relative text-center py-2 px-4 sm:px-0"
+                className="relative text-center min-w-[160px] sm:min-w-[200px] px-2"
               >
-                <span className="text-lg font-semibold text-[#3CE8B3] bg-clip-text">
+                <span className="inline-block text-xl sm:text-2xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight">
                   {f.label}
                 </span>
                 {idx !== features.length - 1 && (
-                  <div className="hidden sm:block absolute top-1/2 right-0 w-px h-6 -translate-y-1/2 bg-gradient-to-b from-[#3CE8B3]/60 to-transparent"></div>
+                  <div className="hidden sm:block absolute top-1/2 right-0 w-px h-10 -translate-y-1/2 bg-gradient-to-b from-[#3CE8B3]/60 to-transparent"></div>
                 )}
               </li>
             ))}
