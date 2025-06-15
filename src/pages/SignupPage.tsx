@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Google, Facebook, Apple } from "lucide-react";
+import { apple, facebook } from "lucide-react";
 
 const bgDark = "bg-[#0D1A2B]";
 const teal = "#3CE8B3";
@@ -120,7 +120,24 @@ export default function SignupPage() {
             onClick={handleGoogleSignup}
             className="flex items-center justify-center gap-2 rounded-lg bg-white/90 hover:bg-white text-[#0D1A2B] font-semibold px-6 py-2 shadow transition border border-white/50"
           >
-            <Google className="w-5 h-5" />
+            <span
+              style={{
+                fontFamily: "Arial, sans-serif",
+                fontWeight: "bold",
+                fontSize: "20px",
+                color: "#4285F4",
+                background: "white",
+                borderRadius: "50%",
+                width: "26px",
+                height: "26px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+              aria-label="Google G"
+            >
+              G
+            </span>
             Sign up with Google
           </button>
           <button
@@ -128,7 +145,7 @@ export default function SignupPage() {
             onClick={handleFacebookSignup}
             className="flex items-center justify-center gap-2 rounded-lg bg-[#1977f3] hover:bg-[#1666c1]/95 text-white font-semibold px-6 py-2 shadow transition"
           >
-            <Facebook className="w-5 h-5" />
+            {React.createElement(facebook, { className: "w-5 h-5" })}
             Sign up with Facebook
           </button>
           <button
@@ -136,7 +153,7 @@ export default function SignupPage() {
             onClick={handleAppleSignup}
             className="flex items-center justify-center gap-2 rounded-lg bg-[#121212] hover:bg-black/90 text-white font-semibold px-6 py-2 shadow transition"
           >
-            <Apple className="w-5 h-5" />
+            {React.createElement(apple, { className: "w-5 h-5" })}
             Sign up with Apple
           </button>
           <div className="flex items-center my-2 text-white/30 gap-2 select-none">
