@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Plus, Trash2, Download, Calendar, User, DollarSign } from "lucide-react";
 
@@ -101,6 +100,16 @@ export const WasteLog = () => {
     return acc;
   }, {} as Record<string, number>);
 
+  // Calculate most common waste cause
+  const causeCounts = filteredData.reduce((acc, entry) => {
+    acc[entry.cause] = (acc[entry.cause] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+  const mostCommonCause =
+    Object.entries(causeCounts).length === 0
+      ? "N/A"
+      : Object.entries(causeCounts).reduce((a, b) => (b[1] > a[1] ? b : a))[0].replace("-", " ");
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -155,10 +164,7 @@ export const WasteLog = () => {
             <h3 className="text-lg font-semibold text-white">Most Common</h3>
           </div>
           <div className="text-lg font-bold text-blue-400 capitalize">
-            {filteredData.reduce((acc, entry) => {
-              acc[entry.cause] = (acc[entry.cause] || 0) + 1;
-              return acc;
-            }, {} as Record<string, number>)}
+            {mostCommonCause}
           </div>
           <p className="text-white/70 text-sm">Waste cause</p>
         </div>
