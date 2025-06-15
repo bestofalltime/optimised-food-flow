@@ -152,6 +152,8 @@ export default function LandingPage() {
               max-w-[1400px]
               mx-auto
               px-0
+              justify-items-center
+              items-center
             "
           >
             {/* Top row: 0,1,2; Bottom row: 3,4 */}
@@ -178,7 +180,7 @@ export default function LandingPage() {
               return (
                 <li
                   key={f.label}
-                  className={`relative text-center min-w-[160px] sm:min-w-[200px] px-2 ${gridClass}`}
+                  className={`relative text-center min-w-[160px] sm:min-w-[200px] px-2 flex flex-col items-center justify-center ${gridClass}`}
                 >
                   <span className="inline-block text-xl sm:text-2xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight">
                     {f.label}
