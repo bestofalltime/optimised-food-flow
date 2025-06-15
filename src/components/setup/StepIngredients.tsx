@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -60,10 +61,10 @@ export default function StepIngredients({
 
   function handleContinue(e: React.FormEvent) {
     e.preventDefault();
-    if (useUpload) {
-      onNext(uploadPreview); // Pass whatever's in the preview, even if empty
-    } else {
-      onNext(manualRows); // Pass whatever's in manualRows, even if incomplete
+    if (useUpload && uploadPreview.length) {
+      onNext(uploadPreview);
+    } else if (!useUpload && manualValid) {
+      onNext(manualRows);
     }
   }
 
@@ -218,6 +219,10 @@ export default function StepIngredients({
         <Button
           type="submit"
           className="bg-[#3CE8B3] hover:bg-[#37d9a6] text-white font-bold px-8 py-2 rounded-lg"
+          disabled={
+            (useUpload && !uploadPreview.length) ||
+            (!useUpload && !manualValid)
+          }
         >
           Continue
         </Button>
