@@ -27,42 +27,55 @@ const valueStats = [{
   color: "text-accent"
 }];
 // Update plans array as requested
-const plans = [{
-  name: "Starter",
-  price: "Free",
-  color: "border-accent bg-accent/10",
-  details: [
-    "Up to 50 ingredients",
-    "1 branch",
-    "POS sync",
-    "Manual waste logging",
-    "Monthly usage summary",
-    "Access to current month’s data",
-  ],
-  cta: "Try Free"
-}, {
-  name: "Pro",
-  price: "$59/month",
-  color: "border-blue-400 bg-blue-400/10",
-  badge: "Most Popular",
-  details: [
-    "All Starter features",
-    "Up to 250 ingredients",
-    "Multi-branch toggle",
-    "Predictive ordering suggestions",
-    "FIFO-based expiry alerts",
-    "Variance tracking",
-    "Full monthly reporting (waste, usage, variance)",
-    "Export monthly data (CSV, PDF)",
-  ],
-  cta: "Start Free Trial"
-}, {
-  name: "Enterprise",
-  price: "Custom",
-  color: "border-red-400 bg-red-400/10",
-  details: ["Unlimited items/branches", "SLA & WhatsApp support", "Onboarding support", "Dedicated success manager"],
-  cta: "Book a Demo"
-}];
+const plans = [
+  {
+    name: "Starter",
+    price: "Free",
+    color: "border-accent bg-accent/10",
+    details: [
+      "Up to 50 ingredients",
+      "1 branch",
+      "POS sync",
+      "Manual waste logging",
+      "Monthly usage summary",
+      "Access to current month’s data",
+    ],
+    cta: "Try Free"
+  },
+  {
+    name: "Pro",
+    price: "$59/month",
+    color: "border-blue-400 bg-blue-400/10",
+    badge: "Most Popular",
+    details: [
+      "All Starter features",
+      "Up to 250 ingredients",
+      "Multi-branch toggle",
+      "Predictive ordering suggestions",
+      "FIFO-based expiry alerts",
+      "Variance tracking",
+      "Full monthly reporting (waste, usage, variance)",
+      "Export monthly data (CSV, PDF)",
+    ],
+    cta: "Start Free Trial"
+  },
+  {
+    name: "Enterprise",
+    price: "$179/month per branch",
+    color: "border-red-400 bg-red-400/10",
+    details: [
+      "All Pro features",
+      "Unlimited ingredients and branches",
+      "Dedicated account manager",
+      "SLA-backed priority support",
+      "WhatsApp & phone help",
+      "Custom KPI dashboards (monthly)",
+      "Full API access",
+      "Advanced onboarding + training"
+    ],
+    cta: "Book a Demo"
+  }
+];
 const testimonials = [{
   quote: "This paid for itself in the first month.",
   author: "Michel, Beirut"
