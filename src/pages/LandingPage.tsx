@@ -1,60 +1,79 @@
 import { useNavigate } from "react-router-dom";
 const bgImage = "/lovable-uploads/8b5eeac1-aa2e-4fee-ae27-07892dbcf765.png";
-const features = [{
-  label: "Real-time POS syncing",
-  icon: "📈"
-}, {
-  label: "Smart ordering + forecasting",
-  icon: "🤖"
-}, {
-  label: "FIFO expiry logic",
-  icon: "⏳"
-}, {
-  label: "Staff accountability tools",
-  icon: "🧑‍🍳"
-}, {
-  label: "Mobile + desktop access",
-  icon: "📱"
-}];
-const valueStats = [{
-  stat: "1,620 tons",
-  caption: "Restaurants in Beirut waste / year",
-  color: "text-accent"
-}, {
-  stat: "15%",
-  caption: "Reduce waste by up to",
-  color: "text-accent"
-}, {
-  stat: "$3,000–$5,000",
-  caption: "Cut annual losses by",
-  color: "text-accent"
-}];
-const plans = [{
-  name: "Starter",
-  price: "Free",
-  color: "border-accent bg-accent/10",
-  details: ["Up to 50 ingredients", "1 branch", "POS sync", "Waste logging", "7-day history"],
-  cta: "Try Free"
-}, {
-  name: "Pro",
-  price: "$59/mo",
-  color: "border-blue-400 bg-blue-400/10",
-  details: ["All Starter features", "250 ingredients", "Forecasted orders", "Expiry alerts", "Multi-branch view", "30-day variance reports"],
-  cta: "Start Free Trial"
-}, {
-  name: "Enterprise",
-  price: "Custom",
-  color: "border-red-400 bg-red-400/10",
-  details: ["Unlimited items/branches", "SLA & WhatsApp support", "Onboarding support", "Dedicated success manager"],
-  cta: "Book a Demo"
-}];
-const testimonials = [{
-  quote: "This paid for itself in the first month.",
-  author: "Michel, Beirut"
-}, {
-  quote: "I cut lettuce waste by 40%.",
-  author: "Lina, Saifi Bistro"
-}];
+const featuresRow1 = [
+  {
+    label: "Real-time POS syncing",
+    icon: "📈"
+  },
+  {
+    label: "Smart ordering + forecasting",
+    icon: "🤖"
+  },
+  {
+    label: "FIFO expiry logic",
+    icon: "⏳"
+  },
+];
+const featuresRow2 = [
+  {
+    label: "Staff accountability tools",
+    icon: "🧑‍🍳"
+  },
+  {
+    label: "Mobile + desktop access",
+    icon: "📱"
+  }
+];
+const valueStats = [
+  {
+    stat: "1,620 tons",
+    caption: "Restaurants in Beirut waste / year",
+    color: "text-accent"
+  },
+  {
+    stat: "15%",
+    caption: "Reduce waste by up to",
+    color: "text-accent"
+  },
+  {
+    stat: "$3,000–$5,000",
+    caption: "Cut annual losses by",
+    color: "text-accent"
+  }
+];
+const plans = [
+  {
+    name: "Starter",
+    price: "Free",
+    color: "border-accent bg-accent/10",
+    details: ["Up to 50 ingredients", "1 branch", "POS sync", "Waste logging", "7-day history"],
+    cta: "Try Free"
+  },
+  {
+    name: "Pro",
+    price: "$59/mo",
+    color: "border-blue-400 bg-blue-400/10",
+    details: ["All Starter features", "250 ingredients", "Forecasted orders", "Expiry alerts", "Multi-branch view", "30-day variance reports"],
+    cta: "Start Free Trial"
+  },
+  {
+    name: "Enterprise",
+    price: "Custom",
+    color: "border-red-400 bg-red-400/10",
+    details: ["Unlimited items/branches", "SLA & WhatsApp support", "Onboarding support", "Dedicated success manager"],
+    cta: "Book a Demo"
+  }
+];
+const testimonials = [
+  {
+    quote: "This paid for itself in the first month.",
+    author: "Michel, Beirut"
+  },
+  {
+    quote: "I cut lettuce waste by 40%.",
+    author: "Lina, Saifi Bistro"
+  }
+];
 
 // Accent color is #3CE8B3
 const accent = "text-[#3CE8B3]";
@@ -62,8 +81,8 @@ const bgDark = "bg-[#0D1A2B]";
 const bgOverlay = "bg-black/60";
 export default function LandingPage() {
   const nav = useNavigate();
-  // Grid positions: want Staff accountability (index 3) and Mobile + desktop access (index 4) on the bottom row
-  return <div className={`w-full min-h-screen ${bgDark} text-white`}>
+  return (
+    <div className={`w-full min-h-screen ${bgDark} text-white`}>
       {/* Hero */}
       <div className="relative min-h-[60vh] flex items-center lg:items-end p-0" style={{
       background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
@@ -83,49 +102,39 @@ export default function LandingPage() {
       </div>
 
       {/* Features */}
-      <section className="bg-[#0D1A2B] w-full max-w-none py-12 px-0 mx-0">
+      <section className="bg-[#0D1A2B] w-full max-w-none py-12 mx-0 px-0">
         <div className="flex flex-col items-center w-full">
-          <h2 className="text-2xl font-bold text-white mb-6 tracking-tight">
+          <h2 className="text-2xl font-bold text-white mb-8 tracking-tight">
             Product Features
           </h2>
-          <ul className="
-              w-full
-              grid
-              grid-cols-1
-              grid-rows-5
-              gap-6
-              sm:grid-cols-3 sm:grid-rows-2
-              md:grid-cols-5 md:grid-rows-2
-              max-w-[1400px]
-              mx-auto
-              px-0
-              justify-items-center
-              items-center
-            ">
-            {/* Top row: 0,1,2; Bottom row: 3,4 */}
-            {features.map((f, idx) => {
-            let gridClass = "";
-            if (idx === 3) {
-              // "Staff accountability tools"
-              gridClass = "sm:col-start-1 sm:row-start-2 md:col-start-4 md:row-start-2";
-            } else if (idx === 4) {
-              // "Mobile + desktop access"
-              gridClass = "sm:col-start-2 sm:row-start-2 md:col-start-5 md:row-start-2";
-            } else if (idx === 0) {
-              gridClass = "sm:col-start-1 sm:row-start-1 md:col-start-1 md:row-start-1";
-            } else if (idx === 1) {
-              gridClass = "sm:col-start-2 sm:row-start-1 md:col-start-2 md:row-start-1";
-            } else if (idx === 2) {
-              gridClass = "sm:col-start-3 sm:row-start-1 md:col-start-3 md:row-start-1";
-            }
-            return <li key={f.label} className={`relative text-center min-w-[160px] sm:min-w-[200px] px-2 flex flex-col items-center justify-center ${gridClass}`}>
-                  <span className="inline-block text-xl sm:text-2xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight text-center py-0 mx-[5px]">
+          {/* First row */}
+          <div className="w-full flex justify-center">
+            <ul className="
+              flex flex-col sm:flex-row gap-6 items-center justify-center
+              ">
+              {featuresRow1.map((f) => (
+                <li key={f.label} className="relative text-center min-w-[160px] sm:min-w-[200px] px-2 flex flex-col items-center justify-center">
+                  <span className="inline-block text-3xl mb-1">{f.icon}</span>
+                  <span className="inline-block text-lg sm:text-xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight text-center py-0 mx-[5px]">
                     {f.label}
                   </span>
-                  {/* Remove vertical divider for grid version */}
-                </li>;
-          })}
-          </ul>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {/* Second row */}
+          <div className="w-full mt-6 flex justify-center">
+            <ul className="flex flex-col sm:flex-row gap-6 items-center justify-center">
+              {featuresRow2.map((f) => (
+                <li key={f.label} className="relative text-center min-w-[160px] sm:min-w-[200px] px-2 flex flex-col items-center justify-center">
+                  <span className="inline-block text-3xl mb-1">{f.icon}</span>
+                  <span className="inline-block text-lg sm:text-xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight text-center py-0 mx-[5px]">
+                    {f.label}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -182,5 +191,6 @@ export default function LandingPage() {
           Get Started
         </button>
       </section>
-    </div>;
+    </div>
+  );
 }
