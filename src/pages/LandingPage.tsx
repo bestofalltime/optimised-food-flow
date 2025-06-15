@@ -69,18 +69,20 @@ export default function LandingPage() {
       >
         <div className="absolute inset-0 pointer-events-none" />
         <div className="relative z-10 w-full max-w-4xl mx-auto p-8 text-center flex flex-col items-center">
-          {/* Logo: clear center, more blurred edges, blends with background */}
-          <img
-            src={bgImage}
-            alt="OptiMised Logo"
-            className="w-72 h-72 object-contain bg-transparent opacity-95"
-            style={{
-              backgroundColor: "transparent",
-              WebkitMaskImage:
-                "radial-gradient(circle at 50% 50%, white 50%, transparent 100%)",
-              maskImage: "radial-gradient(circle at 50% 50%, white 50%, transparent 100%)",
-            }}
-          />
+          {/* Logo: mask and bluish fade edge */}
+          <div className="bg-[#0D1A2B] flex items-center justify-center rounded-full" style={{width:'340px',height:'340px',overflow:'hidden'}}>
+            <img
+              src={bgImage}
+              alt="OptiMised Logo"
+              className="w-[320px] h-[320px] object-contain bg-transparent opacity-95"
+              style={{
+                backgroundColor: "transparent",
+                WebkitMaskImage:
+                  "radial-gradient(circle at 50% 50%, white 60%, transparent 100%)",
+                maskImage: "radial-gradient(circle at 50% 50%, white 60%, transparent 100%)",
+              }}
+            />
+          </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-lg">
             Inventory Intelligence for Restaurants That Want to{" "}
             <span className={accent}>Waste Less</span>, Earn{" "}
