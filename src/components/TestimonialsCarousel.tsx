@@ -294,7 +294,7 @@ export const TestimonialsCarousel: React.FC = () => {
       dir={dir}
     >
       <div
-        className="flex gap-0 flex-nowrap overflow-x-scroll no-scrollbar"
+        className="flex gap-6 flex-nowrap overflow-x-scroll no-scrollbar"
         ref={carouselRef}
         tabIndex={0}
         aria-label="Testimonials"
