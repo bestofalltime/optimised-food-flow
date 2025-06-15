@@ -55,14 +55,14 @@ export const Dashboard = () => {
         />
       </div>
 
+      {/* QUICK ACTIONS */}
+      <QuickActionsGrid />
+
       {/* WASTE TREND CHART */}
       <WasteTrendComparisonChart />
 
       {/* ALERTS */}
       <DashboardAlerts />
-
-      {/* QUICK ACTIONS */}
-      <QuickActionsGrid />
     </div>
   );
 };
