@@ -62,8 +62,7 @@ const bgDark = "bg-[#0D1A2B]";
 const bgOverlay = "bg-black/60";
 export default function LandingPage() {
   const nav = useNavigate();
-  return (
-    <div className={`w-full min-h-screen ${bgDark} text-white`}>
+  return <div className={`w-full min-h-screen ${bgDark} text-white`}>
       {/* Hero */}
       <div className="relative min-h-[60vh] flex items-center lg:items-end p-0" style={{
       background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
@@ -181,7 +180,7 @@ export default function LandingPage() {
       </section>
 
       {/* Testimonials */}
-      <section className="w-full py-4 bg-[#0D1A2B]">
+      <section className="w-full bg-[#0D1A2B] py-[50px]">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-7 text-white tracking-tight">
             What Restaurants Are Saying About OptiMised
@@ -189,6 +188,5 @@ export default function LandingPage() {
         </div>
         <TestimonialsCarousel />
       </section>
-    </div>
-  );
+    </div>;
 }
