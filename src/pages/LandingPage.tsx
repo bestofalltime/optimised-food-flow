@@ -175,8 +175,8 @@ export default function LandingPage() {
           {plans.map(plan => (
             <div
               key={plan.name}
-              className={`flex-1 rounded-2xl border-2 ${plan.color} p-6 flex flex-col justify-between min-w-[220px] h-full`}
-              style={{ minHeight: "380px" }}
+              className={`flex-1 rounded-2xl border-2 ${plan.color} p-6 flex flex-col justify-between min-w-[220px] max-w-[380px] min-h-[520px]`}
+              // Same min-h for all boxes to ensure equal height - adjust as needed!
             >
               <div>
                 {/* Add Most Popular badge for Pro plan */}
