@@ -1,4 +1,3 @@
-
 import React, { useRef, useState, useEffect } from "react";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -91,7 +90,6 @@ export const OptiMisedAssistant: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>(preloadMessages);
   const [input, setInput] = useState("");
   const [isBotTyping, setBotTyping] = useState(false);
-  const [apiKey, setApiKey] = useState(localStorage.getItem("perplexityApiKey") || "");
   const chatEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -108,13 +106,6 @@ export const OptiMisedAssistant: React.FC = () => {
       if (chatEndRef.current)
         chatEndRef.current.scrollIntoView({ behavior: "smooth" });
     }, 0);
-  }
-
-  // Save Perplexity API key persistently (localStorage)
-  function handleApiKeySave(e: React.FormEvent) {
-    e.preventDefault();
-    localStorage.setItem("perplexityApiKey", apiKey);
-    toast({ title: "API key saved", description: "Perplexity API key saved in browser storage.", duration: 2000 });
   }
 
   function pushUserMessage(msg: string) {
@@ -145,75 +136,6 @@ export const OptiMisedAssistant: React.FC = () => {
     }, 900 + msgs.length * 400);
   }
 
-  // Handle chat with live API if apiKey exists, else fallback
-  async function pushAssistantLiveMessage(question: string) {
-    setBotTyping(true);
-    setMessages((prev) => [
-      ...prev,
-      { role: "assistant", content: "", ts: new Date(), isFakeTyping: true },
-    ]);
-    try {
-      const response = await fetch("https://api.perplexity.ai/chat/completions", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "llama-3.1-sonar-small-128k-online",
-          messages: [
-            { role: "system", content: "Be precise and concise." },
-            { role: "user", content: question },
-          ],
-          temperature: 0.2,
-          top_p: 0.9,
-          max_tokens: 500,
-          return_images: false,
-          return_related_questions: false,
-          search_domain_filter: ["perplexity.ai"],
-          search_recency_filter: "month",
-          frequency_penalty: 1,
-          presence_penalty: 0
-        }),
-      });
-      if (!response.ok) throw new Error(`API error: ${response.statusText}`);
-      const data = await response.json();
-      // Perplexity returns one response, so fake the canned format
-      let answer = "";
-      if (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
-        answer = data.choices[0].message.content;
-      } else {
-        answer = "Sorry, no answer received from Perplexity.";
-      }
-      // Split into lines, trim empty
-      const lines = answer.split("\n").map((l: string) => l.trim()).filter((l: string) => l.length > 0);
-      setMessages((prev) => {
-        const filtered = prev.filter((m) => !m.isFakeTyping);
-        const tsBase = new Date();
-        const extra = lines.map((reply: string, i: number) => ({
-          role: "assistant" as Role,
-          content: reply,
-          ts: new Date(tsBase.getTime() + i * 1000),
-        }));
-        return [...filtered, ...extra];
-      });
-    } catch (err: any) {
-      setMessages((prev) => prev.filter((m) => !m.isFakeTyping));
-      toast({
-        title: "Error",
-        description: `Failed to fetch answer from Perplexity: ${err.message}`,
-        variant: "destructive",
-        duration: 4000,
-      });
-      // fallback to dummy
-      setTimeout(() => {
-        pushAssistantMessage(getAssistantFakeResponse(question));
-      }, 800);
-    } finally {
-      setBotTyping(false);
-    }
-  }
-
   function onSamplePrompt(prompt: string) {
     setInput(prompt);
     setTimeout(() => {
@@ -221,24 +143,16 @@ export const OptiMisedAssistant: React.FC = () => {
     }, 200);
   }
 
-  async function handleSend(e?: React.FormEvent) {
+  function handleSend(e?: React.FormEvent) {
     if (e) e.preventDefault();
     const trimmed = input.trim();
     if (!trimmed) return;
     pushUserMessage(trimmed);
     setInput("");
-
-    if (apiKey) {
-      // live call to Perplexity API
-      setTimeout(() => {
-        pushAssistantLiveMessage(trimmed);
-      }, 600);
-    } else {
-      // fallback canned
-      setTimeout(() => {
-        pushAssistantMessage(getAssistantFakeResponse(trimmed));
-      }, 600);
-    }
+    // Use canned response
+    setTimeout(() => {
+      pushAssistantMessage(getAssistantFakeResponse(trimmed));
+    }, 600);
   }
 
   // Floating button
@@ -279,32 +193,6 @@ export const OptiMisedAssistant: React.FC = () => {
             <div className="text-base font-bold text-white">{ASSISTANT_HEADER}</div>
             <div className="text-xs text-white/70">{ASSISTANT_SUBHEADER}</div>
           </div>
-
-          {/* Perplexity API Key entry (if not on Supabase) */}
-          <form onSubmit={handleApiKeySave} className="p-3 border-b border-white/10 flex flex-col gap-1 bg-[#1a2b42]">
-            <label htmlFor="perplexity-key" className="text-xs text-white/90 font-semibold mb-1">
-              {"Perplexity API Key (for real answers):"}
-            </label>
-            <input
-              id="perplexity-key"
-              type="password"
-              placeholder="sk-...."
-              value={apiKey}
-              onChange={e => setApiKey(e.target.value)}
-              className="rounded px-3 py-2 bg-white/90 text-gray-900 text-xs w-full focus:outline-none mb-2"
-              style={{fontFamily:'monospace'}}
-              autoComplete="off"
-              spellCheck={false}
-            />
-            <div className="flex gap-2 justify-between items-center">
-              <Button type="submit" size="sm" className="text-xs px-3 py-1">
-                Save Key
-              </Button>
-              <span className="text-xs text-white/70">
-                Get your key at <a href="https://platform.perplexity.ai/" target="_blank" rel="noopener noreferrer" className="underline text-teal-200">Perplexity</a>
-              </span>
-            </div>
-          </form>
 
           {/* Chat Feed */}
           <div className="flex-1 overflow-y-auto px-3 pb-2" style={{ fontFamily: "Inter, sans-serif" }}>
@@ -401,4 +289,3 @@ export const OptiMisedAssistant: React.FC = () => {
 };
 
 export default OptiMisedAssistant;
-
