@@ -29,7 +29,14 @@ const plans = [{
   name: "Starter",
   price: "Free",
   color: "border-accent bg-accent/10",
-  details: ["Up to 50 ingredients", "1 branch", "POS sync", "Waste logging", "7-day history"],
+  details: [
+    "Up to 50 ingredients",
+    "1 branch",
+    "POS sync",
+    "Manual waste logging",
+    "Monthly usage summary",
+    "Access to current month’s data",
+  ],
   cta: "Try Free"
 }, {
   name: "Pro",
@@ -152,7 +159,10 @@ export default function LandingPage() {
                 </div>
                 <ul className="mb-6 space-y-1 text-white/90">
                   {plan.details.map(detail => (
-                    <li key={detail}>• {detail}</li>
+                    <li key={detail}>
+                      <span className="mr-2 text-[#3CE8B3]">✅</span>
+                      {detail}
+                    </li>
                   ))}
                 </ul>
               </div>
