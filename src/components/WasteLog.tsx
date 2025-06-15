@@ -1,238 +1,317 @@
+
 import { useState } from "react";
-import { Plus, Trash2, Download, Calendar, User, DollarSign } from "lucide-react";
+import { Info, Download, CheckCircle, XCircle } from "lucide-react";
+import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "./ui/dialog";
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
 
-interface WasteEntry {
-  id: string;
-  itemName: string;
-  quantity: number;
-  unit: string;
-  cause: "spoilage" | "theft" | "over-prep" | "contamination" | "other";
-  staffName: string;
-  dateTime: string;
-  cost: number;
-  notes: string;
-  category: string;
-}
+const kpiCards = [
+  {
+    label: "Total Discrepancies This Month",
+    value: "14",
+    subtext: "Discrepancy ≥ ±10%",
+    color: "bg-red-600/90",
+    tooltip: "Comparison between POS sales and actual inventory change",
+    icon: <XCircle className="text-red-200" size={32} />,
+  },
+  {
+    label: "High-Risk Items (Overused)",
+    value: "5",
+    subtext: "Used more than sold",
+    color: "bg-yellow-400/80",
+    tooltip: "Comparison between POS sales and actual inventory change",
+    icon: <Info className="text-yellow-900" size={32} />,
+  },
+  {
+    label: "Risk Value ($ Loss)",
+    value: "$347.20",
+    subtext: "Estimated based on unit cost",
+    color: "bg-emerald-600/90",
+    tooltip: "Comparison between POS sales and actual inventory change",
+    icon: <Info className="text-emerald-200" size={32} />,
+  },
+];
 
-const mockWasteData: WasteEntry[] = [
+const discrepancyRows = [
   {
-    id: "1",
-    itemName: "Lettuce",
-    quantity: 2.5,
-    unit: "kg",
-    cause: "spoilage",
-    staffName: "Sarah Johnson",
-    dateTime: "2024-06-11 09:30",
-    cost: 13.75,
-    notes: "Found wilted during morning inspection",
-    category: "Vegetables"
+    ingredient: "Chicken Breast",
+    posSales: 120,
+    inventoryUsed: 145,
+    delta: 25,
+    alert: "high",
+    reason: "Overuse",
+    percent: 21,
   },
   {
-    id: "2",
-    itemName: "Chicken Breast",
-    quantity: 1.2,
-    unit: "kg",
-    cause: "contamination",
-    staffName: "Mike Chen",
-    dateTime: "2024-06-11 14:15",
-    cost: 15.00,
-    notes: "Cross-contamination incident",
-    category: "Meat"
+    ingredient: "Cheese Slices",
+    posSales: 180,
+    inventoryUsed: 160,
+    delta: -20,
+    alert: "low",
+    reason: "Underuse",
+    percent: -11,
   },
   {
-    id: "3",
-    itemName: "Milk",
-    quantity: 0.5,
-    unit: "L",
-    cause: "spoilage",
-    staffName: "Anna Rodriguez",
-    dateTime: "2024-06-10 16:45",
-    cost: 1.75,
-    notes: "Expired yesterday",
-    category: "Dairy"
+    ingredient: "Lettuce",
+    posSales: 95,
+    inventoryUsed: 95,
+    delta: 0,
+    alert: "normal",
+    reason: "–",
+    percent: 0,
   },
-  {
-    id: "4",
-    itemName: "Bread Rolls",
-    quantity: 8.0,
-    unit: "pieces",
-    cause: "over-prep",
-    staffName: "Tom Wilson",
-    dateTime: "2024-06-10 21:30",
-    cost: 6.40,
-    notes: "Prepared too many for dinner service",
-    category: "Bakery"
+];
+
+const getAlertBadgeStyles = (alert: string) => {
+  switch (alert) {
+    case "high":
+      return "bg-red-600/20 text-red-400 border-red-500/40";
+    case "low":
+      return "bg-yellow-400/20 text-yellow-700 border-yellow-400/30";
+    case "normal":
+    default:
+      return "bg-green-500/20 text-green-300 border-green-600/30";
   }
+};
+
+const getAlertEmoji = (alert: string) => {
+  switch (alert) {
+    case "high":
+      return "🔴";
+    case "low":
+      return "🟡";
+    case "normal":
+    default:
+      return "🟢";
+  }
+};
+
+const getRowGlow = (alert: string) => {
+  switch (alert) {
+    case "high":
+      return "hover:shadow-[0_0_10px_0_rgba(239,68,68,0.3)]";
+    case "low":
+      return "hover:shadow-[0_0_10px_0_rgba(252,211,77,0.24)]";
+    case "normal":
+    default:
+      return "";
+  }
+};
+
+const wasteLogRows = [
+  {
+    date: "June 11",
+    item: "Milk",
+    qty: 2.0,
+    unit: "L",
+    reason: "Spoiled",
+    staff: "Nour",
+    posLinked: true,
+  },
+  {
+    date: "June 10",
+    item: "Bread",
+    qty: 10,
+    unit: "pcs",
+    reason: "Over-prep",
+    staff: "Elias",
+    posLinked: false,
+  },
+  {
+    date: "June 09",
+    item: "Tomatoes",
+    qty: 3.2,
+    unit: "kg",
+    reason: "Theft",
+    staff: "Dana",
+    posLinked: true,
+  },
 ];
 
 export const WasteLog = () => {
-  const [selectedPeriod, setSelectedPeriod] = useState("week");
-  const [causeFilter, setCauseFilter] = useState("all");
-  const [showAddModal, setShowAddModal] = useState(false);
+  // Modal for discrepancy row
+  const [openDiscrepancyModal, setOpenDiscrepancyModal] = useState<null | typeof discrepancyRows[0]>(null);
+  // Modal for manual log
+  const [openLogWaste, setOpenLogWaste] = useState(false);
 
-  const filteredData = mockWasteData.filter(entry => {
-    const matchesCause = causeFilter === "all" || entry.cause === causeFilter;
-    return matchesCause;
-  });
-
-  const totalWasteCost = filteredData.reduce((sum, entry) => sum + entry.cost, 0);
-  const totalWasteQuantity = filteredData.reduce((sum, entry) => sum + entry.quantity, 0);
-
-  const getCauseColor = (cause: string) => {
-    switch (cause) {
-      case "spoilage":
-        return "bg-red-500/20 text-red-300 border-red-500/30";
-      case "theft":
-        return "bg-purple-500/20 text-purple-300 border-purple-500/30";
-      case "over-prep":
-        return "bg-yellow-500/20 text-yellow-300 border-yellow-500/30";
-      case "contamination":
-        return "bg-orange-500/20 text-orange-300 border-orange-500/30";
-      case "other":
-        return "bg-blue-500/20 text-blue-300 border-blue-500/30";
-      default:
-        return "bg-accent/20 text-accent border-accent/30";
-    }
-  };
-
-  const wasteByCategory = filteredData.reduce((acc, entry) => {
-    acc[entry.category] = (acc[entry.category] || 0) + entry.cost;
-    return acc;
-  }, {} as Record<string, number>);
-
-  // Calculate most common waste cause
-  const causeCounts = filteredData.reduce((acc, entry) => {
-    acc[entry.cause] = (acc[entry.cause] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
-  const mostCommonCause =
-    Object.entries(causeCounts).length === 0
-      ? "N/A"
-      : Object.entries(causeCounts).reduce((a, b) => (b[1] > a[1] ? b : a))[0].replace("-", " ");
+  // --- Waste Log Modal state (dummy, not functional) ---
+  const [selectedIngredient, setSelectedIngredient] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [unit, setUnit] = useState("kg");
+  const [cause, setCause] = useState("Spoiled");
+  const [staff, setStaff] = useState("Nour");
+  const [posLinked, setPosLinked] = useState(false);
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-white">Waste Log</h1>
-        <div className="flex space-x-3">
-          <button className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors">
-            <Download size={20} />
-            <span>Export CSV</span>
-          </button>
-          <button
-            onClick={() => setShowAddModal(true)}
-            className="bg-accent hover:bg-accent/80 text-primary px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors"
-          >
-            <Plus size={20} />
-            <span>Log Waste</span>
-          </button>
-        </div>
+    <div className="relative min-h-screen px-2 sm:px-6 py-8 bg-[#0D1A2B] font-sans">
+      <h1 className="text-2xl sm:text-3xl font-bold text-white mb-6 tracking-tight">
+        Waste Log &amp; POS Discrepancy Tracking
+      </h1>
+
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
+        {kpiCards.map((card, i) => (
+          <Tooltip key={i}>
+            <TooltipTrigger asChild>
+              <div
+                className={`${card.color} rounded-xl shadow border border-white/10 px-6 py-6 flex flex-col items-center justify-center gap-2 cursor-pointer transition-transform hover:scale-105 relative animate-fade-in`}
+              >
+                <div className="absolute top-4 right-4">{card.icon}</div>
+                <div className="text-3xl font-bold text-white">{card.value}</div>
+                <div className="text-base font-medium text-white text-center mb-1">{card.label}</div>
+                <div className="text-xs text-white/70">{card.subtext}</div>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" className="bg-accent border-accent-foreground text-primary">
+              {card.tooltip}
+            </TooltipContent>
+          </Tooltip>
+        ))}
       </div>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
-          <div className="flex items-center space-x-3 mb-2">
-            <DollarSign className="text-accent" size={24} />
-            <h3 className="text-lg font-semibold text-white">Total Cost</h3>
-          </div>
-          <div className="text-3xl font-bold text-accent">${totalWasteCost.toFixed(2)}</div>
-          <p className="text-white/70 text-sm">This period</p>
+      {/* Discrepancy Table */}
+      <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden mb-8">
+        <div className="px-6 py-4">
+          <h2 className="text-lg text-white font-semibold mb-2">POS–Inventory Variance Table</h2>
         </div>
-
-        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
-          <div className="flex items-center space-x-3 mb-2">
-            <Trash2 className="text-red-400" size={24} />
-            <h3 className="text-lg font-semibold text-white">Total Entries</h3>
-          </div>
-          <div className="text-3xl font-bold text-red-400">{filteredData.length}</div>
-          <p className="text-white/70 text-sm">Waste incidents</p>
-        </div>
-
-        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
-          <div className="flex items-center space-x-3 mb-2">
-            <Calendar className="text-yellow-400" size={24} />
-            <h3 className="text-lg font-semibold text-white">Avg Per Day</h3>
-          </div>
-          <div className="text-3xl font-bold text-yellow-400">${(totalWasteCost / 7).toFixed(2)}</div>
-          <p className="text-white/70 text-sm">Daily average</p>
-        </div>
-
-        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
-          <div className="flex items-center space-x-3 mb-2">
-            <User className="text-blue-400" size={24} />
-            <h3 className="text-lg font-semibold text-white">Most Common</h3>
-          </div>
-          <div className="text-lg font-bold text-blue-400 capitalize">
-            {mostCommonCause}
-          </div>
-          <p className="text-white/70 text-sm">Waste cause</p>
-        </div>
-      </div>
-
-      {/* Filters */}
-      <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <select
-            value={selectedPeriod}
-            onChange={(e) => setSelectedPeriod(e.target.value)}
-            className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-accent"
-          >
-            <option value="today">Today</option>
-            <option value="week">This Week</option>
-            <option value="month">This Month</option>
-            <option value="quarter">This Quarter</option>
-          </select>
-
-          <select
-            value={causeFilter}
-            onChange={(e) => setCauseFilter(e.target.value)}
-            className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-accent"
-          >
-            <option value="all">All Causes</option>
-            <option value="spoilage">Spoilage</option>
-            <option value="theft">Theft</option>
-            <option value="over-prep">Over-preparation</option>
-            <option value="contamination">Contamination</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-      </div>
-
-      {/* Waste Entries Table */}
-      <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full divide-y divide-white/10">
             <thead className="bg-white/10">
               <tr>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Item</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Quantity</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Cause</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Staff</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Date/Time</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Cost</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Notes</th>
+                <th className="px-6 py-3 text-left text-xs font-bold text-white/80">Ingredient</th>
+                <th className="px-6 py-3 text-left text-xs font-bold text-white/80">POS Sales</th>
+                <th className="px-6 py-3 text-left text-xs font-bold text-white/80">Inventory Used</th>
+                <th className="px-6 py-3 text-left text-xs font-bold text-white/80">X − Y (Delta)</th>
+                <th className="px-6 py-3 text-left text-xs font-bold text-white/80">Alert Level</th>
+                <th className="px-6 py-3 text-left text-xs font-bold text-white/80">Reason Detected</th>
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((entry, index) => (
-                <tr key={entry.id} className={`border-t border-white/10 ${index % 2 === 0 ? 'bg-white/5' : ''}`}>
+              {discrepancyRows.map((row, idx) => (
+                <Tooltip key={row.ingredient}>
+                  <TooltipTrigger asChild>
+                    <tr
+                      className={`transition-colors cursor-pointer select-none ${idx % 2 === 0 ? "bg-white/5" : ""} ${getRowGlow(row.alert)}`}
+                      title=""
+                      onClick={() => setOpenDiscrepancyModal(row)}
+                    >
+                      <td className="px-6 py-4 text-white font-medium">{row.ingredient}</td>
+                      <td className="px-6 py-4 text-white/90">{row.posSales} units</td>
+                      <td className="px-6 py-4 text-white/90">{row.inventoryUsed} units</td>
+                      <td className={`px-6 py-4 font-mono font-bold ${
+                        row.delta > 0
+                          ? "text-red-400"
+                          : row.delta < 0
+                          ? "text-yellow-400"
+                          : "text-green-300"
+                      }`}>
+                        {row.delta > 0 ? "+" : ""}
+                        {row.delta}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border font-semibold text-xs ${getAlertBadgeStyles(row.alert)}`}>
+                          {getAlertEmoji(row.alert)}{" "}
+                          {row.alert === "high"
+                            ? "High"
+                            : row.alert === "low"
+                            ? "Low"
+                            : "Normal"}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-white/75">{row.reason}</td>
+                    </tr>
+                  </TooltipTrigger>
+                  <TooltipContent side="right" className="bg-accent border-accent-foreground text-primary w-60 text-xs font-medium">
+                    This item has a usage mismatch. Investigate source of variance.
+                  </TooltipContent>
+                </Tooltip>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Discrepancy Modal */}
+      <Dialog open={!!openDiscrepancyModal} onOpenChange={(open) => !open && setOpenDiscrepancyModal(null)}>
+        <DialogContent className="bg-[#142638] border-2 border-teal-400/50 shadow-xl text-white">
+          <DialogHeader>
+            <DialogTitle>
+              Discrepancy Details – {openDiscrepancyModal?.ingredient}
+            </DialogTitle>
+          </DialogHeader>
+          {/* Dummy details */}
+          <div className="mb-5">
+            <div className="mb-2">
+              <span className="inline-block font-semibold text-white/80 mb-1">Timeline (last 3 entries):</span>
+              <ul className="text-sm text-white/85 pl-5 list-disc">
+                <li>2024-06-11: 5 units removed by Mike (Overuse)</li>
+                <li>2024-06-10: 10 units logged by Anna (Over-prep)</li>
+                <li>2024-06-09: 7 units on POS, matched inventory</li>
+              </ul>
+            </div>
+            <div className="mb-2">
+              <span className="inline-block font-semibold text-white/80 mb-1">Staff Logs:</span>
+              <div className="text-sm text-white/85">
+                Mike (shift lead), Anna (kitchen), Dana (manager)
+              </div>
+            </div>
+            <div className="mb-2">
+              <span className="inline-block font-semibold text-white/80 mb-1">Detected Reason:</span>
+              <div className="text-sm text-white/85">{openDiscrepancyModal?.reason}</div>
+            </div>
+          </div>
+          <DialogFooter className="flex gap-2">
+            <Button variant="outline" onClick={() => setOpenDiscrepancyModal(null)}>
+              Ignore
+            </Button>
+            <Button variant="secondary">Log Waste</Button>
+            <Button variant="destructive">Flag for Investigation</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* MANUAL WASTE LOG TABLE */}
+      <div className="mt-10 bg-white/5 rounded-xl border border-white/10 overflow-hidden mb-8">
+        <div className="px-6 py-4 flex justify-between items-center">
+          <h2 className="text-lg text-white font-semibold mb-2">Logged Waste Entries (Manual)</h2>
+          <Button
+            variant="default"
+            className="bg-accent text-primary px-3 py-2 rounded-lg hover:bg-accent/80"
+            onClick={() => setOpenLogWaste(true)}
+          >
+            + Log New Waste
+          </Button>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full divide-y divide-white/10">
+            <thead className="bg-white/10">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-bold text-white/80">Date</th>
+                <th className="px-6 py-3 text-left text-xs font-bold text-white/80">Item</th>
+                <th className="px-6 py-3 text-left text-xs font-bold text-white/80">Qty</th>
+                <th className="px-6 py-3 text-left text-xs font-bold text-white/80">Unit</th>
+                <th className="px-6 py-3 text-left text-xs font-bold text-white/80">Reason</th>
+                <th className="px-6 py-3 text-left text-xs font-bold text-white/80">Staff</th>
+                <th className="px-6 py-3 text-left text-xs font-bold text-white/80">POS Linked?</th>
+              </tr>
+            </thead>
+            <tbody>
+              {wasteLogRows.map((row, idx) => (
+                <tr key={row.date + row.item} className={`${idx % 2 === 0 ? "bg-white/5" : ""} hover:shadow-lg transition-shadow`}>
+                  <td className="px-6 py-4 text-white font-medium">{row.date}</td>
+                  <td className="px-6 py-4 text-white/90">{row.item}</td>
+                  <td className="px-6 py-4 text-white/90">{row.qty}</td>
+                  <td className="px-6 py-4 text-white/90">{row.unit}</td>
+                  <td className="px-6 py-4 text-white/80">{row.reason}</td>
+                  <td className="px-6 py-4 text-white/70">{row.staff}</td>
                   <td className="px-6 py-4">
-                    <div>
-                      <div className="font-medium text-white">{entry.itemName}</div>
-                      <div className="text-sm text-white/70">{entry.category}</div>
-                    </div>
+                    {row.posLinked ? (
+                      <CheckCircle className="text-green-400" size={20} aria-label="POS Linked" />
+                    ) : (
+                      <XCircle className="text-red-400" size={20} aria-label="Not Linked" />
+                    )}
                   </td>
-                  <td className="px-6 py-4 text-white">{entry.quantity} {entry.unit}</td>
-                  <td className="px-6 py-4">
-                    <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium border ${getCauseColor(entry.cause)}`}>
-                      {entry.cause.replace('-', ' ')}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-white">{entry.staffName}</td>
-                  <td className="px-6 py-4 text-white/70">{entry.dateTime}</td>
-                  <td className="px-6 py-4 text-accent font-medium">${entry.cost.toFixed(2)}</td>
-                  <td className="px-6 py-4 text-white/70 max-w-xs truncate">{entry.notes}</td>
                 </tr>
               ))}
             </tbody>
@@ -240,25 +319,85 @@ export const WasteLog = () => {
         </div>
       </div>
 
-      {/* Waste by Category Chart */}
-      <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Waste by Category</h3>
-        <div className="space-y-3">
-          {Object.entries(wasteByCategory).map(([category, cost]) => (
-            <div key={category} className="flex items-center justify-between">
-              <span className="text-white">{category}</span>
-              <div className="flex items-center space-x-3">
-                <div className="w-32 bg-white/10 rounded-full h-2">
-                  <div
-                    className="bg-accent h-2 rounded-full"
-                    style={{ width: `${(cost / totalWasteCost) * 100}%` }}
-                  ></div>
-                </div>
-                <span className="text-accent font-medium w-16 text-right">${cost.toFixed(2)}</span>
+      {/* Log Waste Modal */}
+      <Dialog open={openLogWaste} onOpenChange={setOpenLogWaste}>
+        <DialogContent className="bg-[#142638] border-2 border-teal-400/50 shadow-xl text-white">
+          <DialogHeader>
+            <DialogTitle>New Waste Entry</DialogTitle>
+          </DialogHeader>
+          <form className="space-y-4">
+            <div>
+              <label className="block text-xs text-white/70 mb-1">Ingredient</label>
+              <input className="w-full px-3 py-2 rounded-lg bg-[#1c2c3a] border border-white/20 text-white" value={selectedIngredient} onChange={e=>setSelectedIngredient(e.target.value)} placeholder="Select ingredient" />
+            </div>
+            <div className="flex gap-3">
+              <div className="flex-1">
+                <label className="block text-xs text-white/70 mb-1">Quantity</label>
+                <input type="number" className="w-full px-3 py-2 rounded-lg bg-[#1c2c3a] border border-white/20 text-white" value={quantity} onChange={e=>setQuantity(e.target.value)} placeholder="0.0" />
+              </div>
+              <div>
+                <label className="block text-xs text-white/70 mb-1">Unit</label>
+                <select value={unit} onChange={e=>setUnit(e.target.value)} className="w-full px-3 py-2 rounded-lg bg-[#1c2c3a] border border-white/20 text-white">
+                  <option>kg</option>
+                  <option>pcs</option>
+                  <option>L</option>
+                </select>
               </div>
             </div>
-          ))}
-        </div>
+            <div>
+              <label className="block text-xs text-white/70 mb-1">Cause</label>
+              <select value={cause} onChange={e=>setCause(e.target.value)} className="w-full px-3 py-2 rounded-lg bg-[#1c2c3a] border border-white/20 text-white">
+                <option>Spoiled</option>
+                <option>Over-prep</option>
+                <option>Theft</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs text-white/70 mb-1">Staff</label>
+              <input className="w-full px-3 py-2 rounded-lg bg-[#1c2c3a] border border-white/20 text-white" value={staff} onChange={e=>setStaff(e.target.value)} />
+            </div>
+            <div className="flex items-center gap-2">
+              <input type="checkbox" id="pos-linked" checked={posLinked} onChange={e=>setPosLinked(e.target.checked)} className="accent-accent h-4 w-4" />
+              <label htmlFor="pos-linked" className="text-xs text-white/70">POS Linked?</label>
+            </div>
+            <DialogFooter>
+              <Button variant="secondary" type="button" onClick={() => setOpenLogWaste(false)}>
+                Cancel
+              </Button>
+              <Button variant="accent" type="button" onClick={() => setOpenLogWaste(false)}>
+                Save Entry
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* EXPORT SECTION */}
+      <div className="fixed right-6 bottom-6 flex flex-col gap-2 z-40">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="default" size="lg" className="bg-accent text-primary relative group hover:bg-accent/80 transition-all w-56">
+              <Download className="mr-2" />
+              Download Discrepancy Log (CSV)
+              <span className="absolute inset-0 rounded-lg ring-accent transition-all pointer-events-none group-hover:ring-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="left" className="bg-accent border-accent-foreground text-primary">
+            Export a snapshot of current waste and discrepancies
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="outline" size="lg" className="bg-[#0D1A2B] text-white border-white/15 hover:bg-white/5 w-56">
+              <Download className="mr-2" />
+              Download Waste Entries (CSV)
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="left" className="bg-accent border-accent-foreground text-primary">
+            Export a snapshot of current waste and discrepancies
+          </TooltipContent>
+        </Tooltip>
       </div>
     </div>
   );
