@@ -27,55 +27,26 @@ const valueStats = [{
   color: "text-accent"
 }];
 // Update plans array as requested
-const plans = [
-  {
-    name: "Starter",
-    price: "Free",
-    color: "border-accent bg-accent/10",
-    details: [
-      "Up to 50 ingredients",
-      "1 branch",
-      "POS sync",
-      "Manual waste logging",
-      "Monthly usage summary",
-      "Access to current month’s data",
-    ],
-    cta: "Try Free"
-  },
-  {
-    name: "Pro",
-    price: "$59/month",
-    color: "border-blue-400 bg-blue-400/10",
-    badge: "Most Popular",
-    details: [
-      "All Starter features",
-      "Up to 250 ingredients",
-      "Multi-branch toggle",
-      "Predictive ordering suggestions",
-      "FIFO-based expiry alerts",
-      "Variance tracking",
-      "Full monthly reporting (waste, usage, variance)",
-      "Export monthly data (CSV, PDF)",
-    ],
-    cta: "Start Free Trial"
-  },
-  {
-    name: "Enterprise",
-    price: "$179/month per branch",
-    color: "border-red-400 bg-red-400/10",
-    details: [
-      "All Pro features",
-      "Unlimited ingredients and branches",
-      "Dedicated account manager",
-      "SLA-backed priority support",
-      "WhatsApp & phone help",
-      "Custom KPI dashboards (monthly)",
-      "Full API access",
-      "Advanced onboarding + training"
-    ],
-    cta: "Book a Demo"
-  }
-];
+const plans = [{
+  name: "Starter",
+  price: "Free",
+  color: "border-accent bg-accent/10",
+  details: ["Up to 50 ingredients", "1 branch", "POS sync", "Manual waste logging", "Monthly usage summary", "Access to current month’s data"],
+  cta: "Try Free"
+}, {
+  name: "Pro",
+  price: "$59/month",
+  color: "border-blue-400 bg-blue-400/10",
+  badge: "Most Popular",
+  details: ["All Starter features", "Up to 250 ingredients", "Multi-branch toggle", "Predictive ordering suggestions", "FIFO-based expiry alerts", "Variance tracking", "Full monthly reporting (waste, usage, variance)", "Export monthly data (CSV, PDF)"],
+  cta: "Start Free Trial"
+}, {
+  name: "Enterprise",
+  price: "$179/month per branch",
+  color: "border-red-400 bg-red-400/10",
+  details: ["All Pro features", "Unlimited ingredients and branches", "Dedicated account manager", "SLA-backed priority support", "WhatsApp & phone help", "Custom KPI dashboards (monthly)", "Full API access", "Advanced onboarding + training"],
+  cta: "Book a Demo"
+}];
 const testimonials = [{
   quote: "This paid for itself in the first month.",
   author: "Michel, Beirut"
@@ -170,45 +141,34 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing Plans */}
-      <section className="max-w-5xl mx-auto py-8 px-4">
+      <section className="max-w-5xl mx-auto px-4 py-[65px]">
         <h2 className="text-3xl font-bold text-center mb-8">Choose the Plan That Fits Your Kitchen</h2>
         <div className="flex flex-col md:flex-row gap-8 md:gap-4 items-center md:items-stretch justify-center w-full">
-          {plans.map(plan => (
-            <div
-              key={plan.name}
-              className={`flex-1 rounded-2xl border-2 ${plan.color} p-6 flex flex-col justify-between min-w-[220px] max-w-[380px] min-h-[520px]`}
-              // Same min-h for all boxes to ensure equal height - adjust as needed!
-            >
+          {plans.map(plan => <div key={plan.name} className={`flex-1 rounded-2xl border-2 ${plan.color} p-6 flex flex-col justify-between min-w-[220px] max-w-[380px] min-h-[520px]`}
+        // Same min-h for all boxes to ensure equal height - adjust as needed!
+        >
               <div>
                 {/* Add Most Popular badge for Pro plan */}
-                {plan.badge && (
-                  <div className="flex justify-center mb-2">
+                {plan.badge && <div className="flex justify-center mb-2">
                     <Badge variant="secondary" className="bg-[#3CE8B3]/15 border-[#3CE8B3] text-[#3CE8B3]">
                       {plan.badge}
                     </Badge>
-                  </div>
-                )}
+                  </div>}
                 <div className="text-2xl font-bold mb-2">{plan.name}</div>
                 <div className={accent + " text-3xl font-bold mb-3"}>
                   {plan.price}
                 </div>
                 <ul className="mb-6 space-y-1 text-white/90">
-                  {plan.details.map(detail => (
-                    <li key={detail}>
+                  {plan.details.map(detail => <li key={detail}>
                       <span className="mr-2 text-[#3CE8B3]">•</span>
                       {detail}
-                    </li>
-                  ))}
+                    </li>)}
                 </ul>
               </div>
-              <button
-                className="bg-[#3CE8B3] w-full py-2 rounded font-bold text-[#0D1A2B] hover:bg-[#33b392] transition mb-2 mt-auto"
-                onClick={() => nav("/signup")}
-              >
+              <button className="bg-[#3CE8B3] w-full py-2 rounded font-bold text-[#0D1A2B] hover:bg-[#33b392] transition mb-2 mt-auto" onClick={() => nav("/signup")}>
                 {plan.cta}
               </button>
-            </div>
-          ))}
+            </div>)}
         </div>
         {/* Toggle Monthly/Yearly (not functional yet) */}
         <div className="text-center text-white/50 text-xs mt-4">
