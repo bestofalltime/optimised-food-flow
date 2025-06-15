@@ -82,14 +82,14 @@ export default function SignupPage() {
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col items-center mb-8">
-          {/* Updated logo style - bigger and brighter */}
+          {/* Updated logo style - brighter and more translucent */}
           <img
             src="/lovable-uploads/8b5eeac1-aa2e-4fee-ae27-07892dbcf765.png"
             alt="OptiMised Logo"
             className="w-[300px] h-[300px] object-scale-down mb-3"
             style={{
-              opacity: 0.6,
-              filter: "brightness(1.25) contrast(1.0) saturate(0.7)",
+              opacity: 0.45,
+              filter: "brightness(1.45) contrast(1.0) saturate(0.7)",
               backgroundColor: "transparent"
             }}
           />
