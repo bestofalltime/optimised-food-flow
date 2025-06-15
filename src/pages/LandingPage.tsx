@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Badge } from "@/components/ui/badge";
 const bgImage = "/lovable-uploads/8b5eeac1-aa2e-4fee-ae27-07892dbcf765.png";
 const featuresRow1 = [{
   label: "Real-time POS syncing"
@@ -25,6 +26,7 @@ const valueStats = [{
   caption: "Cut annual losses by",
   color: "text-accent"
 }];
+// Update plans array as requested
 const plans = [{
   name: "Starter",
   price: "Free",
@@ -40,9 +42,19 @@ const plans = [{
   cta: "Try Free"
 }, {
   name: "Pro",
-  price: "$59/mo",
+  price: "$59/month",
   color: "border-blue-400 bg-blue-400/10",
-  details: ["All Starter features", "250 ingredients", "Forecasted orders", "Expiry alerts", "Multi-branch view", "30-day variance reports"],
+  badge: "Most Popular",
+  details: [
+    "All Starter features",
+    "Up to 250 ingredients",
+    "Multi-branch toggle",
+    "Predictive ordering suggestions",
+    "FIFO-based expiry alerts",
+    "Variance tracking",
+    "Full monthly reporting (waste, usage, variance)",
+    "Export monthly data (CSV, PDF)",
+  ],
   cta: "Start Free Trial"
 }, {
   name: "Enterprise",
@@ -154,6 +166,14 @@ export default function LandingPage() {
               style={{ minHeight: "380px" }}
             >
               <div>
+                {/* Add Most Popular badge for Pro plan */}
+                {plan.badge && (
+                  <div className="flex justify-center mb-2">
+                    <Badge variant="secondary" className="bg-[#3CE8B3]/15 border-[#3CE8B3] text-[#3CE8B3]">
+                      {plan.badge}
+                    </Badge>
+                  </div>
+                )}
                 <div className="text-2xl font-bold mb-2">{plan.name}</div>
                 <div className={accent + " text-3xl font-bold mb-3"}>
                   {plan.price}
