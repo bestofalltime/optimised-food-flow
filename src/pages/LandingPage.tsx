@@ -171,13 +171,12 @@ export default function LandingPage() {
 
       {/* Pricing Plans */}
       <section className="max-w-5xl mx-auto py-8 px-4">
-        {/* Make all children stretch vertically */}
         <div className="flex flex-col md:flex-row gap-8 md:gap-4 items-stretch justify-center w-full">
           {plans.map(plan => (
             <div
               key={plan.name}
-              className={`flex flex-col flex-1 min-w-[320px] max-w-[360px] h-full rounded-2xl border-2 ${plan.color} p-6 justify-between`}
-              style={{ minHeight: "480px" }}
+              className={`flex flex-col flex-1 min-w-[320px] max-w-[360px] h-full rounded-2xl border-2 ${plan.color} p-6 justify-between mx-auto`}
+              style={{ minHeight: "420px" }}
             >
               <div>
                 {/* Add Most Popular badge for Pro plan */}
