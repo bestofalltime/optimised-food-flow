@@ -1,82 +1,134 @@
 import { useNavigate } from "react-router-dom";
+
 const bgImage = "/lovable-uploads/8b5eeac1-aa2e-4fee-ae27-07892dbcf765.png";
-const features = [{
-  label: "Real-time POS syncing",
-  icon: "📈"
-}, {
-  label: "Smart ordering + forecasting",
-  icon: "🤖"
-}, {
-  label: "FIFO expiry logic",
-  icon: "⏳"
-}, {
-  label: "Staff accountability tools",
-  icon: "🧑‍🍳"
-}, {
-  label: "Mobile + desktop access",
-  icon: "📱"
-}];
-const valueStats = [{
-  stat: "1,620 tons",
-  caption: "Restaurants in Beirut waste / year",
-  color: "text-accent"
-}, {
-  stat: "15%",
-  caption: "Reduce waste by up to",
-  color: "text-accent"
-}, {
-  stat: "$3,000–$5,000",
-  caption: "Cut annual losses by",
-  color: "text-accent"
-}];
-const plans = [{
-  name: "Starter",
-  price: "Free",
-  color: "border-accent bg-accent/10",
-  details: ["Up to 50 ingredients", "1 branch", "POS sync", "Waste logging", "7-day history"],
-  cta: "Try Free"
-}, {
-  name: "Pro",
-  price: "$59/mo",
-  color: "border-blue-400 bg-blue-400/10",
-  details: ["All Starter features", "250 ingredients", "Forecasted orders", "Expiry alerts", "Multi-branch view", "30-day variance reports"],
-  cta: "Start Free Trial"
-}, {
-  name: "Enterprise",
-  price: "Custom",
-  color: "border-red-400 bg-red-400/10",
-  details: ["Unlimited items/branches", "SLA & WhatsApp support", "Onboarding support", "Dedicated success manager"],
-  cta: "Book a Demo"
-}];
-const testimonials = [{
-  quote: "This paid for itself in the first month.",
-  author: "Michel, Beirut"
-}, {
-  quote: "I cut lettuce waste by 40%.",
-  author: "Lina, Saifi Bistro"
-}];
+
+const features = [
+  {
+    label: "Real-time POS syncing",
+    icon: "📈"
+  },
+  {
+    label: "Smart ordering + forecasting",
+    icon: "🤖"
+  },
+  {
+    label: "FIFO expiry logic",
+    icon: "⏳"
+  },
+  {
+    label: "Staff accountability tools",
+    icon: "🧑‍🍳"
+  },
+  {
+    label: "Mobile + desktop access",
+    icon: "📱"
+  }
+];
+
+const valueStats = [
+  {
+    stat: "1,620 tons",
+    caption: "Restaurants in Beirut waste / year",
+    color: "text-accent"
+  },
+  {
+    stat: "15%",
+    caption: "Reduce waste by up to",
+    color: "text-accent"
+  },
+  {
+    stat: "$3,000–$5,000",
+    caption: "Cut annual losses by",
+    color: "text-accent"
+  }
+];
+
+const plans = [
+  {
+    name: "Starter",
+    price: "Free",
+    color: "border-accent bg-accent/10",
+    details: [
+      "Up to 50 ingredients",
+      "1 branch",
+      "POS sync",
+      "Waste logging",
+      "7-day history"
+    ],
+    cta: "Try Free"
+  },
+  {
+    name: "Pro",
+    price: "$59/mo",
+    color: "border-blue-400 bg-blue-400/10",
+    details: [
+      "All Starter features",
+      "250 ingredients",
+      "Forecasted orders",
+      "Expiry alerts",
+      "Multi-branch view",
+      "30-day variance reports"
+    ],
+    cta: "Start Free Trial"
+  },
+  {
+    name: "Enterprise",
+    price: "Custom",
+    color: "border-red-400 bg-red-400/10",
+    details: [
+      "Unlimited items/branches",
+      "SLA & WhatsApp support",
+      "Onboarding support",
+      "Dedicated success manager"
+    ],
+    cta: "Book a Demo"
+  }
+];
+
+const testimonials = [
+  {
+    quote: "This paid for itself in the first month.",
+    author: "Michel, Beirut"
+  },
+  {
+    quote: "I cut lettuce waste by 40%.",
+    author: "Lina, Saifi Bistro"
+  }
+];
 
 // Accent color is #3CE8B3
 const accent = "text-[#3CE8B3]";
 const bgDark = "bg-[#0D1A2B]";
 const bgOverlay = "bg-black/60";
+
 export default function LandingPage() {
   const nav = useNavigate();
   // Grid positions: want Staff accountability (index 3) and Mobile + desktop access (index 4) on the bottom row
-  return <div className={`w-full min-h-screen ${bgDark} text-white`}>
+  return (
+    <div className={`w-full min-h-screen ${bgDark} text-white`}>
       {/* Hero */}
-      <div className="relative min-h-[60vh] flex items-center lg:items-end p-0" style={{
-      background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
-    }}>
+      <div
+        className="relative min-h-[60vh] flex items-center lg:items-end p-0"
+        style={{
+          background: `linear-gradient(rgba(13,26,43,0.93), rgba(13,26,43,0.93)), url('${bgImage}') center/cover no-repeat`
+        }}
+      >
         <div className="absolute inset-0 pointer-events-none" />
         <div className="relative z-10 w-full max-w-4xl mx-auto p-8 text-center flex flex-col items-center">
-          <img src={bgImage} alt="OptiMised Logo" className="w-24 h-24 mb-6 border-4 border-[#3CE8B3] shadow-lg object-cover" />
+          <img 
+            src={bgImage} 
+            alt="OptiMised Logo"
+            className="w-24 h-24 mb-6 border-4 border-[#3CE8B3] shadow-lg object-cover"
+          />
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-lg">
             Inventory Intelligence for Restaurants That Want to{" "}
             <span className={accent}>Waste Less</span>, Earn{" "}
             <span className={accent}>More</span>.
           </h1>
-          <button className={`mt-6 px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg shadow-lg hover:bg-[#33b392] transition`} onClick={() => nav("/signup")}>
+          <button
+            className={`mt-6 px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg shadow-lg hover:bg-[#33b392] transition`}
+            onClick={() => nav("/signup")}
+          >
             Start for Free
           </button>
         </div>
@@ -88,7 +140,8 @@ export default function LandingPage() {
           <h2 className="text-2xl font-bold text-white mb-6 tracking-tight">
             Product Features
           </h2>
-          <ul className="
+          <ul
+            className="
               w-full
               grid
               grid-cols-1
@@ -101,30 +154,41 @@ export default function LandingPage() {
               px-0
               justify-items-center
               items-center
-            ">
+            "
+          >
             {/* Top row: 0,1,2; Bottom row: 3,4 */}
             {features.map((f, idx) => {
-            let gridClass = "";
-            if (idx === 3) {
-              // "Staff accountability tools"
-              gridClass = "sm:col-start-1 sm:row-start-2 md:col-start-4 md:row-start-2";
-            } else if (idx === 4) {
-              // "Mobile + desktop access"
-              gridClass = "sm:col-start-2 sm:row-start-2 md:col-start-5 md:row-start-2";
-            } else if (idx === 0) {
-              gridClass = "sm:col-start-1 sm:row-start-1 md:col-start-1 md:row-start-1";
-            } else if (idx === 1) {
-              gridClass = "sm:col-start-2 sm:row-start-1 md:col-start-2 md:row-start-1";
-            } else if (idx === 2) {
-              gridClass = "sm:col-start-3 sm:row-start-1 md:col-start-3 md:row-start-1";
-            }
-            return <li key={f.label} className={`relative text-center min-w-[160px] sm:min-w-[200px] px-2 flex flex-col items-center justify-center ${gridClass}`}>
-                  <span className="inline-block text-xl sm:text-2xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight text-center py-0 mx-[5px]">
+              let gridClass = "";
+              if (idx === 3) {
+                // "Staff accountability tools"
+                gridClass =
+                  "sm:col-start-1 sm:row-start-2 md:col-start-4 md:row-start-2";
+              } else if (idx === 4) {
+                // "Mobile + desktop access"
+                gridClass =
+                  "sm:col-start-2 sm:row-start-2 md:col-start-5 md:row-start-2";
+              } else if (idx === 0) {
+                gridClass =
+                  "sm:col-start-1 sm:row-start-1 md:col-start-1 md:row-start-1";
+              } else if (idx === 1) {
+                gridClass =
+                  "sm:col-start-2 sm:row-start-1 md:col-start-2 md:row-start-1";
+              } else if (idx === 2) {
+                gridClass =
+                  "sm:col-start-3 sm:row-start-1 md:col-start-3 md:row-start-1";
+              }
+              return (
+                <li
+                  key={f.label}
+                  className={`relative text-center min-w-[160px] sm:min-w-[200px] px-2 flex flex-col items-center justify-center ${gridClass}`}
+                >
+                  <span className="inline-block text-xl sm:text-2xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight">
                     {f.label}
                   </span>
                   {/* Remove vertical divider for grid version */}
-                </li>;
-          })}
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>
@@ -132,30 +196,35 @@ export default function LandingPage() {
       {/* Value Block */}
       <section className="max-w-5xl mx-auto py-8 px-4">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          {valueStats.map(({
-          stat,
-          caption,
-          color
-        }) => <div key={caption} className="text-center flex-1">
+          {valueStats.map(({stat, caption, color}) => (
+            <div key={caption} className="text-center flex-1">
               <div className={`text-4xl font-extrabold ${color}`}>{stat}</div>
               <div className="text-white/70 mt-2">{caption}</div>
-            </div>)}
+            </div>
+          ))}
         </div>
       </section>
 
       {/* Pricing Plans */}
       <section className="max-w-5xl mx-auto py-8 px-4">
         <div className="flex flex-col md:flex-row gap-8 md:gap-4 items-center md:items-stretch justify-center w-full">
-          {plans.map(plan => <div key={plan.name} className={`flex-1 rounded-2xl border-2 ${plan.color} p-6 flex flex-col items-center shadow-md min-w-[220px]`}>
+          {plans.map(plan => (
+            <div key={plan.name} className={`flex-1 rounded-2xl border-2 ${plan.color} p-6 flex flex-col items-center shadow-md min-w-[220px]`}>
               <div className="text-2xl font-bold mb-2">{plan.name}</div>
               <div className={accent + " text-3xl font-bold mb-3"}>{plan.price}</div>
               <ul className="mb-6 space-y-1 text-white/90">
-                {plan.details.map(detail => <li key={detail}>• {detail}</li>)}
+                {plan.details.map(detail => (
+                  <li key={detail}>• {detail}</li>
+                ))}
               </ul>
-              <button className="bg-[#3CE8B3] w-full py-2 rounded font-bold text-[#0D1A2B] hover:bg-[#33b392] transition mb-2" onClick={() => nav("/signup")}>
+              <button
+                className="bg-[#3CE8B3] w-full py-2 rounded font-bold text-[#0D1A2B] hover:bg-[#33b392] transition mb-2"
+                onClick={() => nav("/signup")}
+              >
                 {plan.cta}
               </button>
-            </div>)}
+            </div>
+          ))}
         </div>
         {/* Toggle Monthly/Yearly (not functional yet) */}
         <div className="text-center text-white/50 text-xs mt-4">
@@ -168,19 +237,25 @@ export default function LandingPage() {
       {/* Testimonials */}
       <section className="max-w-4xl mx-auto py-10 px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {testimonials.map((t, i) => <div key={i} className="bg-white/5 border border-accent/10 rounded-xl p-6 flex flex-col items-center">
+          {testimonials.map((t, i) => (
+            <div key={i} className="bg-white/5 border border-accent/10 rounded-xl p-6 flex flex-col items-center">
               <blockquote className="italic text-lg text-[#3CE8B3] mb-3">“{t.quote}”</blockquote>
               <div className="text-white/70 text-sm">— {t.author}</div>
-            </div>)}
+            </div>
+          ))}
         </div>
       </section>
 
       {/* Final CTA */}
       <section className="text-center py-12 px-4">
         <div className="text-2xl font-bold mb-3">Start reducing waste in 5 minutes — no card needed.</div>
-        <button className="mx-auto px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg shadow-lg hover:bg-[#33b392] transition" onClick={() => nav("/signup")}>
+        <button
+          className="mx-auto px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg shadow-lg hover:bg-[#33b392] transition"
+          onClick={() => nav("/signup")}
+        >
           Get Started
         </button>
       </section>
-    </div>;
+    </div>
+  )
 }
