@@ -1,13 +1,12 @@
 
 import { TrendingUp, TrendingDown, AlertTriangle } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ReactNode } from "react";
 
 interface KPICardProps {
   title: string;
   value: string;
   subtitle: string;
-  trend: ReactNode;
+  trend: string;
   trendType: "positive" | "negative" | "warning";
 }
 
@@ -35,17 +34,16 @@ export const KPICard = ({ title, value, subtitle, trend, trendType }: KPICardPro
   };
 
   return (
-    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 cursor-pointer transition-colors shadow hover:scale-105 hover:shadow-lg">
+    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-colors">
       <h3 className="text-sm font-medium text-white/70 mb-2">{title}</h3>
       <div className="flex items-baseline space-x-2 mb-1">
         <span className="text-2xl font-bold text-white">{value}</span>
       </div>
       <p className="text-sm text-white/60 mb-3">{subtitle}</p>
-      <div className={cn("flex items-center space-x-1 text-sm mt-1", getTrendColor())}>
+      <div className={cn("flex items-center space-x-1 text-sm", getTrendColor())}>
         {getTrendIcon()}
         <span>{trend}</span>
       </div>
     </div>
   );
 };
-
