@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import TestimonialsCarousel from "@/components/TestimonialsCarousel";
@@ -73,7 +74,7 @@ export default function LandingPage() {
           <div className="flex items-center justify-center">
             <img src={bgImage} alt="OptiMised Logo" style={{
             opacity: 0.6,
-            filter: "brightness(0.75) contrast(0.9)",
+            filter: "brightness(0.85) contrast(0.85)",
             backgroundColor: "transparent"
           }} className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] object-scale-down" />
           </div>
