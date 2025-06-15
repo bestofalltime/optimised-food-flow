@@ -68,8 +68,8 @@ export default function LandingPage() {
         }}
       >
         <div className="absolute inset-0 pointer-events-none" />
-        <div className="relative z-10 w-full max-w-4xl mx-auto p-8 text-center flex flex-col items-center">
-          {/* Logo: clear center, more blurred edges, blends with background */}
+        <div className="relative z-10 w-full max-w-[850px] mx-auto flex flex-col items-center justify-center">
+          {/* Logo: bigger, translucency preserved, blurred edges */}
           <div
             className="flex items-center justify-center"
             style={{ backgroundColor: "#0D1A2B", borderRadius: "50%" }}
@@ -77,7 +77,7 @@ export default function LandingPage() {
             <img
               src={bgImage}
               alt="OptiMised Logo"
-              className="w-96 h-96 object-contain bg-transparent opacity-50"
+              className="w-[480px] h-[480px] md:w-[550px] md:h-[550px] object-contain bg-transparent opacity-50"
               style={{
                 backgroundColor: "#0D1A2B",
                 WebkitMaskImage:
@@ -86,18 +86,23 @@ export default function LandingPage() {
                   "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)",
               }}
             />
+            {/* Overlay Text */}
+            <div className="absolute top-1/2 left-1/2 w-[88%] md:w-[78%] -translate-x-1/2 -translate-y-1/2 z-10 px-4">
+              <div className="bg-[#0D1A2BCC] rounded-xl p-4 md:p-6 border border-white/10 shadow-none">
+                <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold mb-2 text-white text-center leading-snug">
+                  Inventory Intelligence for Restaurants That Want to{" "}
+                  <span className={accent}>Waste Less</span>, Earn{" "}
+                  <span className={accent}>More</span>.
+                </h1>
+                <button
+                  className={`mt-4 px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg hover:bg-[#33b392] transition mx-auto block`}
+                  onClick={() => nav("/signup")}
+                >
+                  Start for Free
+                </button>
+              </div>
+            </div>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
-            Inventory Intelligence for Restaurants That Want to{" "}
-            <span className={accent}>Waste Less</span>, Earn{" "}
-            <span className={accent}>More</span>.
-          </h1>
-          <button
-            className={`mt-6 px-8 py-3 rounded-full bg-[#3CE8B3] text-[#0D1A2B] font-bold text-lg hover:bg-[#33b392] transition`}
-            onClick={() => nav("/signup")}
-          >
-            Start for Free
-          </button>
         </div>
       </div>
 
