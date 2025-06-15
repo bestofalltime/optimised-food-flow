@@ -67,23 +67,16 @@ export default function LandingPage() {
         <div className="relative z-10 w-full flex flex-col items-center p-8 text-center py-[50px]">
           {/* Logo: clear center, more blurred edges, blends with background */}
           <div className="flex items-center justify-center" style={{
+          backgroundColor: "#0D1A2B",
+          borderRadius: "50%"
+        }}>
+            <img src={bgImage} alt="OptiMised Logo" style={{
+            opacity: 0.65,
+            filter: "brightness(1.15)",
             backgroundColor: "#0D1A2B",
-            borderRadius: "50%"
-          }}>
-            <img
-              src={bgImage}
-              alt="OptiMised Logo"
-              style={{
-                opacity: 0.6,
-                filter: "brightness(1.08) contrast(1.25) saturate(1.1) drop-shadow(0 0 10px #fff) blur(0.5px)",
-                backgroundColor: "#0D1A2B",
-                WebkitMaskImage:
-                  "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)",
-                maskImage:
-                  "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)"
-              }}
-              className="w-[520px] h-[520px] bg-transparent object-scale-down"
-            />
+            WebkitMaskImage: "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)",
+            maskImage: "radial-gradient(circle at 50% 50%, white 25%, rgba(255,255,255,0.7) 60%, transparent 90%)"
+          }} className="w-96 h-96 bg-transparent brightness-110 object-scale-down" />
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
             Inventory Intelligence for Restaurants That Want to{" "}
