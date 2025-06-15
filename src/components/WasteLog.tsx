@@ -435,7 +435,7 @@ export const WasteLog = () => {
               <Button variant="secondary" type="button" onClick={() => setOpenLogWaste(false)}>
                 Cancel
               </Button>
-              <Button variant="accent" type="button" onClick={() => setOpenLogWaste(false)}>
+              <Button variant="default" type="button" onClick={() => setOpenLogWaste(false)}>
                 Save Entry
               </Button>
             </DialogFooter>
