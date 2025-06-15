@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 const templateUrl = "#"; // Not a real file.
@@ -98,7 +97,7 @@ export default function StepIngredients({
           )}
         </div>
       ) : (
-        <div className="mb-3">
+        <div className="mb-3 w-full">
           <table className="w-full border text-sm bg-white rounded-lg">
             <thead>
               <tr className="bg-gray-100">
