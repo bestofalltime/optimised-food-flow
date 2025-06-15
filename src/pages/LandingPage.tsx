@@ -139,7 +139,20 @@ export default function LandingPage() {
           <h2 className="text-2xl font-bold text-white mb-6 tracking-tight">
             Product Features
           </h2>
-          <ul className="max-w-[1700px] w-full flex flex-col sm:flex-row sm:justify-between items-center gap-8 sm:gap-2 mx-auto px-0">
+          <ul
+            className="
+              w-full
+              grid
+              grid-cols-1
+              grid-rows-5
+              gap-6
+              sm:grid-cols-3 sm:grid-rows-2
+              md:grid-cols-5 md:grid-rows-2
+              max-w-[1400px]
+              mx-auto
+              px-0
+            "
+          >
             {features.map((f, idx) => (
               <li
                 key={f.label}
@@ -148,9 +161,7 @@ export default function LandingPage() {
                 <span className="inline-block text-xl sm:text-2xl font-bold text-transparent bg-gradient-to-tr from-[#3CE8B3] to-[#47e6db] bg-clip-text shadow-lg drop-shadow-lg tracking-tight leading-tight">
                   {f.label}
                 </span>
-                {idx !== features.length - 1 && (
-                  <div className="hidden sm:block absolute top-1/2 right-0 w-px h-10 -translate-y-1/2 bg-gradient-to-b from-[#3CE8B3]/60 to-transparent"></div>
-                )}
+                {/* Remove vertical divider for grid version */}
               </li>
             ))}
           </ul>
