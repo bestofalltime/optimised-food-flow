@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
@@ -110,15 +109,7 @@ export default function SignupPage() {
       {/* Left Panel */}
       <div className="hidden md:flex flex-col justify-center gap-8 items-start flex-1 px-12 relative"
         style={{ background: "#0D1A2B" }}>
-        <img
-          src="/lovable-uploads/8b5eeac1-aa2e-4fee-ae27-07892dbcf765.png"
-          alt="OptiMised Logo"
-          className="w-24 h-24 mb-4 mt-auto opacity-90"
-          style={{
-            background: "transparent",
-            filter: "drop-shadow(0 2px 20px rgba(60,232,179,0.08))",
-          }}
-        />
+        {/* Logo removed from here */}
         <h2 className="text-white font-extrabold text-2xl mb-2 tracking-tight">Machine-learning your food waste to zero.</h2>
         <ul className="my-4 flex flex-col gap-3">
           {features.map(({ icon, text }) => (
@@ -140,6 +131,16 @@ export default function SignupPage() {
           onSubmit={handleSubmit}
           className="bg-white/[0.98] shadow-xl rounded-2xl p-8 min-w-[330px] w-full max-w-lg flex flex-col gap-5 border border-white/40"
         >
+          {/* Logo moved here */}
+          <img
+            src="/lovable-uploads/8b5eeac1-aa2e-4fee-ae27-07892dbcf765.png"
+            alt="OptiMised Logo"
+            className="w-20 h-20 mx-auto mb-4 mt-1 opacity-90"
+            style={{
+              background: "transparent",
+              filter: "drop-shadow(0 2px 20px rgba(60,232,179,0.08))",
+            }}
+          />
           <h1 className="text-[#0D1A2B] font-bold text-2xl mb-1 text-center">Create your OptiMised account</h1>
           <div className="flex flex-col gap-4">
             <label className="font-semibold text-[#0D1A2B]" htmlFor="restaurant">Business Name</label>
@@ -271,4 +272,3 @@ export default function SignupPage() {
     </div>
   );
 }
-
