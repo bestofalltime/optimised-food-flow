@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Info, Download, CheckCircle, XCircle } from "lucide-react";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
@@ -379,7 +380,7 @@ export const WasteLog = () => {
             <Button
               variant="default"
               size="lg"
-              className="bg-accent text-primary relative group hover:bg-accent/80 transition-all w-60 text-nowrap px-2"
+              className="bg-accent text-primary relative group hover:bg-accent/80 transition-all w-60 text-nowrap px-2 text-sm font-medium"
             >
               <Download className="mr-2" />
               Download Discrepancy Log (CSV)
@@ -395,7 +396,7 @@ export const WasteLog = () => {
             <Button
               variant="outline"
               size="lg"
-              className="bg-[#0D1A2B] text-white border-white/15 hover:bg-white/5 w-60 text-nowrap px-2"
+              className="bg-[#0D1A2B] text-white border-white/15 hover:bg-white/5 w-60 text-nowrap px-2 text-sm font-medium"
             >
               <Download className="mr-2" />
               Download Waste Entries (CSV)
