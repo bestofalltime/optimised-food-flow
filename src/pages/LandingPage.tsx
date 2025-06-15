@@ -76,9 +76,9 @@ export default function LandingPage() {
               alt="OptiMised Logo"
               style={{
                 opacity: 0.6,
-                // Brightness: 1.08 (+8%), Contrast: 1.15 (+15%), Saturation: 0.94 (-6%)
-                // This combination best matches your requirements using CSS filter
-                filter: "brightness(1.08) contrast(1.15) saturate(0.94)",
+                // Brightness: 1.08 (+8%), Contrast: 1.12 (+12%), Saturation: 0.90 (-10%)
+                // Exposure/Shadows/Highlights: approximated by this combo, as requested
+                filter: "brightness(1.08) contrast(1.12) saturate(0.90)",
                 backgroundColor: "transparent"
               }}
               className="w-[330px] h-[330px] sm:w-[440px] sm:h-[440px] md:w-[550px] md:h-[550px] object-scale-down"
