@@ -31,9 +31,9 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-primary flex w-full">
+    <div className="min-h-screen bg-primary flex flex-col lg:flex-row w-full">
       <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-3 sm:p-6 overflow-x-hidden">
         {renderActiveSection()}
         <OptiMisedAssistant />
       </main>

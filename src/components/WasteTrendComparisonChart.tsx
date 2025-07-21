@@ -66,7 +66,7 @@ export function WasteTrendComparisonChart() {
           </select>
         </div>
       </div>
-      <div className="h-64 w-full">
+      <div className="h-48 lg:h-64 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" stroke="#ffffff22" />
@@ -84,7 +84,7 @@ export function WasteTrendComparisonChart() {
         </ResponsiveContainer>
       </div>
       {/* Export buttons */}
-      <div className="flex gap-2 mt-5 justify-end">
+      <div className="flex flex-col sm:flex-row gap-2 mt-5 justify-end">
         <button
           className={`flex items-center gap-2 px-3 py-1.5 rounded bg-accent text-primary text-xs font-semibold shadow transition ${
             loading === 'csv' ? 'opacity-80 animate-pulse cursor-wait' : 'hover:bg-accent/80'

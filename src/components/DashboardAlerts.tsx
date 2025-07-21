@@ -35,8 +35,8 @@ export function DashboardAlerts() {
             </div>
           </button>)}
       </div>
-      {modalIdx !== null && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-dark border border-white/20 rounded-xl p-6 min-w-[340px] max-w-sm relative bg-gray-900">
+      {modalIdx !== null && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="bg-dark border border-white/20 rounded-xl p-4 lg:p-6 w-full max-w-sm relative bg-gray-900">
             <button className="absolute top-2 right-2 text-white/70 hover:text-white" onClick={() => setModalIdx(null)} aria-label="Close">
               <X size={20} />
             </button>

@@ -214,13 +214,13 @@ export const WasteLog = () => {
   const [posLinked, setPosLinked] = useState(false);
 
   return (
-    <div className="relative min-h-screen px-2 sm:px-6 py-8 bg-[#0D1A2B] font-sans">
-      <h1 className="text-2xl sm:text-3xl font-bold text-white mb-6 tracking-tight">
+    <div className="relative min-h-screen px-0 sm:px-6 py-4 lg:py-8 bg-[#0D1A2B] font-sans">
+      <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-white mb-4 lg:mb-6 tracking-tight px-3 lg:px-0">
         Waste Log &amp; POS Discrepancy Tracking
       </h1>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-5 mb-6 lg:mb-8 px-3 lg:px-0">
         {kpiCards.map((card, i) => (
           <Tooltip key={i}>
             <TooltipTrigger asChild>
@@ -241,9 +241,9 @@ export const WasteLog = () => {
       </div>
 
       {/* Discrepancy Table */}
-      <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden mb-8">
-        <div className="px-6 py-4">
-          <h2 className="text-lg text-white font-semibold mb-2">POS–Inventory Variance Table</h2>
+      <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden mb-6 lg:mb-8 mx-3 lg:mx-0">
+        <div className="px-4 lg:px-6 py-3 lg:py-4">
+          <h2 className="text-base lg:text-lg text-white font-semibold mb-2">POS–Inventory Variance Table</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full divide-y divide-white/10">
@@ -342,12 +342,12 @@ export const WasteLog = () => {
       </Dialog>
 
       {/* MANUAL WASTE LOG TABLE */}
-      <div className="mt-10 bg-white/5 rounded-xl border border-white/10 overflow-hidden mb-8">
-        <div className="px-6 py-4 flex justify-between items-center">
-          <h2 className="text-lg text-white font-semibold mb-2">Logged Waste Entries (Manual)</h2>
+      <div className="mt-6 lg:mt-10 bg-white/5 rounded-xl border border-white/10 overflow-hidden mb-6 lg:mb-8 mx-3 lg:mx-0">
+        <div className="px-4 lg:px-6 py-3 lg:py-4 flex flex-col gap-3 lg:flex-row lg:justify-between lg:items-center">
+          <h2 className="text-base lg:text-lg text-white font-semibold mb-0 lg:mb-2">Logged Waste Entries (Manual)</h2>
           <Button
             variant="default"
-            className="bg-accent text-primary px-3 py-2 rounded-lg hover:bg-accent/80"
+            className="bg-accent text-primary px-3 py-2 rounded-lg hover:bg-accent/80 text-sm"
             onClick={() => setOpenLogWaste(true)}
           >
             + Log New Waste
@@ -391,7 +391,7 @@ export const WasteLog = () => {
 
       {/* Log Waste Modal */}
       <Dialog open={openLogWaste} onOpenChange={setOpenLogWaste}>
-        <DialogContent className="bg-[#142638] border-2 border-teal-400/50 shadow-xl text-white">
+        <DialogContent className="bg-[#142638] border-2 border-teal-400/50 shadow-xl text-white max-w-lg mx-4">
           <DialogHeader>
             <DialogTitle>New Waste Entry</DialogTitle>
           </DialogHeader>

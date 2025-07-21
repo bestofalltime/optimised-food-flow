@@ -129,20 +129,20 @@ export const InventoryLog = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-white">Inventory Log</h1>
+      <div className="flex flex-col gap-3 lg:flex-row items-start lg:items-center justify-between">
+        <h1 className="text-2xl lg:text-3xl font-bold text-white">Inventory Log</h1>
         <button
           onClick={() => setShowAddModal(true)}
-          className="bg-accent hover:bg-accent/80 text-primary px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors"
+          className="bg-accent hover:bg-accent/80 text-primary px-3 lg:px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors text-sm lg:text-base"
         >
-          <Plus size={20} />
+          <Plus size={18} className="lg:w-5 lg:h-5" />
           <span>Add Stock</span>
         </button>
       </div>
 
       {/* Filters */}
-      <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 lg:p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-4">
           <div className="relative">
             <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50" />
             <input
@@ -232,7 +232,7 @@ export const InventoryLog = () => {
       </div>
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
           <div className="text-white/70 text-sm">Total Items</div>
           <div className="text-2xl font-bold text-white">{filteredData.length}</div>

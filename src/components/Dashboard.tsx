@@ -17,9 +17,9 @@ export const Dashboard = () => {
   return (
     <div className="space-y-6">
       {/* HEADER */}
-      <div className="flex flex-col gap-2 sm:flex-row items-start sm:items-center justify-between">
+      <div className="flex flex-col gap-3 lg:flex-row items-start lg:items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-1">Dashboard Overview</h1>
+          <h1 className="text-2xl lg:text-3xl font-bold text-white mb-1">Dashboard Overview</h1>
           <div className="text-white/70 text-sm">{date}</div>
         </div>
         <POSStatusCard />

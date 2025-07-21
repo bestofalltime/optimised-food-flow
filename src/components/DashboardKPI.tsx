@@ -28,7 +28,7 @@ export function DashboardKPI(props: KPIProps) {
     <>
       <button
         onClick={() => setModal(true)}
-        className="relative group bg-white/5 border border-white/10 rounded-xl p-5 flex flex-col text-left transition shadow hover:scale-[1.025] focus:outline-accent"
+        className="relative group bg-white/5 border border-white/10 rounded-xl p-4 lg:p-5 flex flex-col text-left transition shadow hover:scale-[1.025] focus:outline-accent"
         tabIndex={0}
       >
         <div className="flex items-center gap-2 mb-1">
@@ -42,7 +42,7 @@ export function DashboardKPI(props: KPIProps) {
             <Info size={16} className="text-yellow-400 ml-1" />
           )}
         </div>
-        <span className="text-2xl font-bold text-white">{props.value}</span>
+        <span className="text-xl lg:text-2xl font-bold text-white">{props.value}</span>
         <span className="text-xs text-white/50 mb-2">{props.subtitle}</span>
         {(props.trend || props.risk) && (
           <div className={`flex items-center space-x-1 text-xs font-medium ${trendColor}`}>
@@ -68,8 +68,8 @@ export function DashboardKPI(props: KPIProps) {
       </button>
       {/* Modal for details */}
       {modal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-dark border border-white/20 rounded-xl p-6 min-w-[340px] max-w-sm relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="bg-dark border border-white/20 rounded-xl p-4 lg:p-6 w-full max-w-sm relative">
             <button
               className="absolute top-2 right-2 text-white/70 hover:text-white"
               onClick={() => setModal(false)}
