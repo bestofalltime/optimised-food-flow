@@ -1,11 +1,12 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Download } from "lucide-react";
 import { VarianceFilterBar } from "./VarianceFilterBar";
 import { VarianceWasteChart } from "./VarianceWasteChart";
 import { VarianceComparisonTable } from "./VarianceComparisonTable";
 import { VarianceForecastModal } from "./VarianceForecastModal";
 import { VarianceForecastSidebar } from "./VarianceForecastSidebar";
+import { useToast } from "@/hooks/use-toast";
 
 const ingredientsList = [
   { name: "Chicken", icon: "🥩" },
@@ -66,10 +67,25 @@ const chartData = [
 ];
 
 export const VarianceReports = () => {
+  const { toast } = useToast();
+  
   // FILTERS
   const [selectedTimeframe, setSelectedTimeframe] = useState("This Month");
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
   const [showForecast, setShowForecast] = useState(true);
+
+  // Show automatic notification when component mounts
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      toast({
+        title: "🤖 AI Insights Available",
+        description: "Critical shortage risk detected for bread rolls. Weather forecast indicates 25% higher demand tomorrow. Consider increasing order by 30 units.",
+        duration: 8000,
+      });
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [toast]);
 
   // MODAL
   const [modalRow, setModalRow] = useState<null | typeof tableData[0]>(null);

@@ -16,6 +16,17 @@ export const Dashboard = () => {
 
   return (
     <div className="space-y-6">
+      {/* AI RECOMMENDATION */}
+      <div className="bg-card/20 border border-white/10 rounded-lg p-4 mb-6">
+        <div className="flex items-center gap-2 mb-2">
+          <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+          <span className="text-white font-medium">AI Recommendation</span>
+        </div>
+        <p className="text-white/90 text-sm">
+          Consider ordering 20% more bread rolls for tomorrow based on weather forecast and historical patterns. Waste levels are optimized this week.
+        </p>
+      </div>
+
       {/* HEADER */}
       <div className="flex flex-col gap-3 lg:flex-row items-start lg:items-center justify-between">
         <div>
