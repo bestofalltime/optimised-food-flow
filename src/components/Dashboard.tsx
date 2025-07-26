@@ -16,15 +16,45 @@ export const Dashboard = () => {
 
   return (
     <div className="space-y-6">
-      {/* AI RECOMMENDATION */}
-      <div className="bg-card/20 border border-white/10 rounded-lg p-4 mb-6">
-        <div className="flex items-center gap-2 mb-2">
-          <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-          <span className="text-white font-medium">AI Recommendation</span>
+      {/* AI RECOMMENDATIONS */}
+      <div className="space-y-3">
+        <div className="bg-card/20 border border-white/10 rounded-lg p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+            <span className="text-white font-medium">AI Recommendation</span>
+          </div>
+          <p className="text-white/90 text-sm">
+            Consider ordering 20% more bread rolls for tomorrow based on weather forecast and historical patterns. Waste levels are optimized this week.
+          </p>
         </div>
-        <p className="text-white/90 text-sm">
-          Consider ordering 20% more bread rolls for tomorrow based on weather forecast and historical patterns. Waste levels are optimized this week.
-        </p>
+        
+        <div className="bg-card/20 border border-white/10 rounded-lg p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            <span className="text-white font-medium">Inventory Alert</span>
+          </div>
+          <p className="text-white/90 text-sm">
+            Tomatoes are expiring in 48 hours. Use in today's specials or consider donating 12kg to local food bank.
+          </p>
+        </div>
+
+        <div className="bg-card/20 border border-white/10 rounded-lg p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+            <span className="text-white font-medium">Cost Optimization</span>
+          </div>
+          <p className="text-white/90 text-sm">
+            Switch to local supplier for lettuce - 15% cost reduction while maintaining quality. Estimated monthly savings: $340.
+          </p>
+        </div>
+      </div>
+
+      {/* WELCOME MESSAGE */}
+      <div className="text-center py-6">
+        <h2 className="text-3xl lg:text-4xl font-bold text-white mb-2">
+          You're all set, waste levels are OptiMised! 
+        </h2>
+        <p className="text-white/70 text-lg">Everything is running smoothly</p>
       </div>
 
       {/* HEADER */}
